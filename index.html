@@ -176,7 +176,7 @@
       if (result.success) {
         document.getElementById('shopForm').style.display = 'none';
         msg.className = 'message success';
-        msg.textContent = `✅ 登録が完了しました！\n食堂ID：${result.shopId}\n\nセットアップ手順をメールでお送りしました。ご確認ください。`;
+        msg.innerHTML = `✅ 登録が完了しました！<br>食堂ID：${result.shopId}<br><br>セットアップ手順をメールでお送りしました。ご確認ください。`;
         msg.style.display = 'block';
       } else {
         msg.className = 'message error';
