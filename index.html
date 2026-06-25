@@ -173,11 +173,11 @@
       const result = await res.json();
       const msg = document.getElementById('resultMessage');
 
-      if (result.success) {
+            if (result.success) {
         document.getElementById('shopForm').style.display = 'none';
+        msg.style.display = 'block';
         msg.className = 'message success';
         msg.innerHTML = `✅ 登録が完了しました！<br>食堂ID：${result.shopId}<br><br>セットアップ手順をメールでお送りしました。ご確認ください。`;
-        msg.style.display = 'block';
       } else {
         msg.className = 'message error';
         msg.textContent = '⚠️ ' + result.message;
