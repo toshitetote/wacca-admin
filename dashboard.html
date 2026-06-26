@@ -313,7 +313,10 @@
       </div>
 
       <div class="card" id="resvCard" style="display:none;">
-        <div class="card-title">予約一覧</div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid #FFE0D0;">
+          <div class="card-title" style="margin:0; padding:0; border:none;">予約一覧</div>
+          <button class="btn btn-outline" style="font-size:12px; padding:6px 14px;" onclick="printReservations()">🖨️ PDF出力</button>
+        </div>
         <div class="table-wrap">
           <table>
             <thead>
@@ -592,6 +595,46 @@
   // ============================================================
   //  ユーティリティ
   // ============================================================
+
+  function printReservations() {
+    const date     = document.getElementById('resv_date').value;
+    const adult    = document.getElementById('sumAdult').textContent;
+    const child    = document.getElementById('sumChild').textContent;
+    const total    = document.getElementById('sumTotal').textContent;
+    const rows     = document.getElementById('resvTbody').innerHTML;
+
+    const win = window.open('', '_blank');
+    win.document.write(`<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8">
+<title>予約一覧 ${date}</title>
+<style>
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; padding: 24px; color: #333; }
+  h2 { font-size: 18px; margin-bottom: 4px; }
+  .sub { font-size: 13px; color: #666; margin-bottom: 20px; }
+  .summary { display: flex; gap: 24px; margin-bottom: 20px; }
+  .summary-item { text-align: center; }
+  .summary-item .num { font-size: 28px; font-weight: bold; color: #FF6B35; }
+  .summary-item .label { font-size: 12px; color: #888; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { background: #FF6B35; color: #fff; padding: 8px 12px; text-align: left; }
+  td { padding: 8px 12px; border-bottom: 1px solid #eee; }
+  @media print { button { display: none; } }
+</style></head><body>
+<h2>📋 予約一覧</h2>
+<div class="sub">${shopName}　${date}</div>
+<div class="summary">
+  <div class="summary-item"><div class="num">${adult}</div><div class="label">大人</div></div>
+  <div class="summary-item"><div class="num">${child}</div><div class="label">こども</div></div>
+  <div class="summary-item"><div class="num">${total}</div><div class="label">合計人数</div></div>
+</div>
+<table><thead><tr><th>氏名</th><th>大人</th><th>こども</th><th>利用料</th></tr></thead>
+<tbody>${rows}</tbody></table>
+<br>
+<button onclick="window.print()">🖨️ 印刷 / PDF保存</button>
+</body></html>`);
+    win.document.close();
+    win.focus();
+  }
 
   function showMsg(id, type, text) {
     const el = document.getElementById(id);
