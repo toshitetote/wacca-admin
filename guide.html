@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WaCCA こども食堂マイページ 操作ガイド</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', sans-serif;
+      color: #333;
+      line-height: 1.8;
+      padding: 40px 48px 60px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .cover {
+      text-align: center;
+      padding: 60px 0 48px;
+      border-bottom: 3px solid #FF6B35;
+      margin-bottom: 40px;
+    }
+    .cover h1 {
+      font-size: 26px;
+      color: #FF6B35;
+      margin-bottom: 10px;
+    }
+    .cover p {
+      font-size: 14px;
+      color: #888;
+    }
+
+    h2 {
+      font-size: 18px;
+      color: #FF6B35;
+      border-left: 5px solid #FF6B35;
+      padding-left: 12px;
+      margin: 36px 0 16px;
+    }
+
+    h3 {
+      font-size: 15px;
+      font-weight: bold;
+      color: #333;
+      margin: 20px 0 8px;
+      padding-left: 8px;
+      border-left: 3px solid #FFD0B8;
+    }
+
+    p { font-size: 14px; color: #444; margin-bottom: 10px; }
+
+    ol, ul {
+      padding-left: 24px;
+      margin-bottom: 12px;
+    }
+    li { font-size: 14px; color: #444; margin-bottom: 6px; }
+
+    .step {
+      background: #FFF8F5;
+      border: 1px solid #FFD0B8;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .step-num {
+      display: inline-block;
+      background: #FF6B35;
+      color: #fff;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 6px;
+    }
+    .step p { margin: 0; }
+
+    .url-box {
+      background: #F5F5F5;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-family: monospace;
+      color: #333;
+      margin: 8px 0;
+      word-break: break-all;
+    }
+
+    .notice {
+      background: #FFF3E0;
+      border-left: 4px solid #FF6B35;
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin: 12px 0;
+      font-size: 13px;
+      color: #555;
+    }
+
+    .section-divider {
+      border: none;
+      border-top: 1px solid #EEE;
+      margin: 32px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+    th {
+      background: #FF6B35;
+      color: #fff;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #F0F0F0;
+    }
+    tr:nth-child(even) td { background: #FFF8F5; }
+
+    @media print {
+      body { padding: 20px 32px; }
+      .no-print { display: none; }
+      h2 { page-break-before: always; }
+      h2:first-of-type { page-break-before: avoid; }
+    }
+
+    .print-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #FF6B35;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>🍚 WaCCA<br>こども食堂マイページ<br>操作ガイド</h1>
+  <p>このガイドはWaCCAマイページの操作方法をご説明するものです。<br>ご不明な点はWaCCA運営（wacca.system@gmail.com）までお問い合わせください。</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>1. マイページへのログイン</h2>
+
+<p>以下のURLからマイページにアクセスしてください。</p>
+<div class="url-box">https://toshitetote.github.io/wacca-admin/dashboard.html</div>
+
+<div class="step"><span class="step-num">STEP 1</span><p>「食堂ID」と「パスワード」を入力します。<br>どちらも登録完了メールに記載されています。</p></div>
+<div class="step"><span class="step-num">STEP 2</span><p>「ログイン」ボタンを押します。</p></div>
+
+<div class="notice">
+  ⚠️ パスワードはお忘れにならないよう、大切に保管してください。
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<h2>2. 開催日程の登録</h2>
+
+<p>「📅 開催日程」タブを開いてください。</p>
+
+<h3>新しい開催日を追加する</h3>
+<div class="step"><span class="step-num">STEP 1</span><p>「開催日」に日付を入力します。</p></div>
+<div class="step"><span class="step-num">STEP 2</span><p>「時間」に開催時間を入力します。（例：11:00〜13:00）</p></div>
+<div class="step"><span class="step-num">STEP 3</span><p>「場所」に会場名を入力します。</p></div>
+<div class="step"><span class="step-num">STEP 4</span><p>「持ち物」を入力します。（任意）</p></div>
+<div class="step"><span class="step-num">STEP 5</span><p>「追加する」ボタンを押します。</p></div>
+
+<h3>開催日を中止にする</h3>
+<p>開催日一覧の右端にある「中止にする」ボタンを押すと、その日の開催が中止になります。利用者のLINEには表示されなくなります。</p>
+
+<div class="notice">
+  💡 開催日を登録すると、利用者がLINEから予約できるようになります。<br>
+  開催の2日前には予約者へ自動でリマインドメールが送られます。
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<h2>3. 予約状況の確認</h2>
+
+<p>「📋 予約確認」タブを開いてください。</p>
+
+<div class="step"><span class="step-num">STEP 1</span><p>「開催日」のプルダウンから確認したい日付を選びます。</p></div>
+<div class="step"><span class="step-num">STEP 2</span><p>「表示」ボタンを押します。</p></div>
+<div class="step"><span class="step-num">STEP 3</span><p>大人・こども・合計の人数と予約者一覧が表示されます。</p></div>
+
+<h3>PDF・印刷で出力する</h3>
+<p>予約一覧が表示された後、右上の「🖨️ PDF出力」ボタンを押すと印刷用のページが開きます。<br>
+ブラウザの印刷機能（Ctrl+P / ⌘+P）でPDFとして保存できます。</p>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<h2>4. 登録利用者の確認</h2>
+
+<p>「👥 利用者」タブを開くと、登録されている利用者の一覧（氏名・メールアドレス・電話番号）が確認できます。</p>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<h2>5. メール一斉配信</h2>
+
+<p>「✉️ メール配信」タブを開いてください。</p>
+
+<div class="step"><span class="step-num">STEP 1</span><p>「件名」にメールの件名を入力します。<br>（例：○月の開催日のお知らせ）</p></div>
+<div class="step"><span class="step-num">STEP 2</span><p>「本文」にメールの内容を入力します。</p></div>
+<div class="step"><span class="step-num">STEP 3</span><p>「一斉送信する」ボタンを押します。</p></div>
+<div class="step"><span class="step-num">STEP 4</span><p>確認ダイアログが出たら「OK」を押します。</p></div>
+
+<div class="notice">
+  💡 メールアドレスを登録している利用者全員に送信されます。<br>
+  送信後の取り消しはできませんので、内容をよくご確認の上送信してください。
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<h2>6. よくある質問</h2>
+
+<table>
+  <thead>
+    <tr><th>質問</th><th>回答</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>パスワードを忘れた</td><td>WaCCA運営（wacca.system@gmail.com）までご連絡ください。</td></tr>
+    <tr><td>予約が表示されない</td><td>開催日程が登録されているか確認してください。</td></tr>
+    <tr><td>メールが届かない</td><td>利用者がメールアドレスを登録していない場合は届きません。</td></tr>
+    <tr><td>開催日を削除したい</td><td>「中止にする」ボタンで非表示にできます。</td></tr>
+  </tbody>
+</table>
+
+<div class="notice">
+  その他ご不明な点は WaCCA運営（wacca.system@gmail.com）までお問い合わせください。
+</div>
+
+<button class="print-btn no-print" onclick="window.print()">🖨️ PDF保存・印刷</button>
+
+</body>
+</html>
