@@ -78,6 +78,14 @@
       line-height: 1.8;
     }
 
+    .price-row {
+      display: flex;
+      gap: 16px;
+    }
+    .price-row .form-group {
+      flex: 1;
+    }
+
     .btn {
       width: 100%;
       padding: 16px;
@@ -103,7 +111,7 @@
       display: none;
       line-height: 1.8;
     }
-    .message.success { background: #E8F5E9; color: #2E7D32; display: block !important; }
+    .message.success { background: #E8F5E9; color: #2E7D32; display: block; }
     .message.error   { background: #FFEBEE; color: #C62828; display: block; }
   </style>
 </head>
@@ -145,7 +153,18 @@
       <input type="text" id="address" placeholder="例：東京都○○区○○町1-2-3" required maxlength="200">
     </div>
 
-        <button type="submit" class="btn" id="submitBtn">登録する</button>
+    <div class="price-row">
+      <div class="form-group">
+        <label>大人の利用料金（円） <span class="required">*</span></label>
+        <input type="number" id="adultPrice" placeholder="例：300（無料は0）" required min="0" max="99999">
+      </div>
+      <div class="form-group">
+        <label>こどもの利用料金（円） <span class="required">*</span></label>
+        <input type="number" id="childPrice" placeholder="例：100（無料は0）" required min="0" max="99999">
+      </div>
+    </div>
+
+    <button type="submit" class="btn" id="submitBtn">登録する</button>
   </form>
   <div id="resultMessage" class="message"></div>
 </div>
@@ -160,12 +179,14 @@
     btn.textContent = '送信中...';
 
     const params = new URLSearchParams({
-      action: 'registerShop',
-      shopName: document.getElementById('shopName').value.trim(),
-      ownerName: document.getElementById('ownerName').value.trim(),
-      email: document.getElementById('email').value.trim(),
-      phone: document.getElementById('phone').value.trim(),
-      address: document.getElementById('address').value.trim()
+      action:     'registerShop',
+      shopName:   document.getElementById('shopName').value.trim(),
+      ownerName:  document.getElementById('ownerName').value.trim(),
+      email:      document.getElementById('email').value.trim(),
+      phone:      document.getElementById('phone').value.trim(),
+      address:    document.getElementById('address').value.trim(),
+      adultPrice: document.getElementById('adultPrice').value,
+      childPrice: document.getElementById('childPrice').value
     });
 
     try {
@@ -173,11 +194,11 @@
       const result = await res.json();
       const msg = document.getElementById('resultMessage');
 
-            if (result.success) {
+      if (result.success) {
         document.getElementById('shopForm').style.display = 'none';
-        msg.style.display = 'block';
         msg.className = 'message success';
         msg.innerHTML = `✅ 登録が完了しました！<br>食堂ID：${result.shopId}<br><br>セットアップ手順をメールでお送りしました。ご確認ください。`;
+        msg.style.display = 'block';
       } else {
         msg.className = 'message error';
         msg.textContent = '⚠️ ' + result.message;
