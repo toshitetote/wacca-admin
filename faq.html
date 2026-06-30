@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WaCCA よくあるご質問（FAQ）</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', sans-serif; background: #FFF4EF; color: #333; line-height: 1.7; }
+
+    .header {
+      background: #E07048;
+      color: #fff;
+      text-align: center;
+      padding: 48px 24px 40px;
+    }
+    .header h1 { font-size: 24px; font-weight: bold; margin-bottom: 8px; }
+    .header p { font-size: 14px; opacity: 0.9; }
+
+    .content { max-width: 760px; margin: 0 auto; padding: 40px 24px 60px; }
+
+    .category { margin-bottom: 40px; }
+    .category-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #E07048;
+      border-left: 5px solid #E07048;
+      padding-left: 12px;
+      margin-bottom: 16px;
+    }
+
+    .faq-item {
+      background: #fff;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      overflow: hidden;
+    }
+
+    .faq-q {
+      padding: 16px 20px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .faq-q::before { content: 'Q.'; color: #E07048; font-size: 16px; flex-shrink: 0; }
+    .faq-q .arrow { color: #E07048; font-size: 18px; transition: transform 0.2s; flex-shrink: 0; }
+    .faq-q.open .arrow { transform: rotate(180deg); }
+
+    .faq-a {
+      display: none;
+      padding: 0 20px 16px 20px;
+      font-size: 14px;
+      color: #555;
+      border-top: 1px solid #F5CBBA;
+      padding-top: 14px;
+    }
+    .faq-a::before { content: 'A.'; color: #43a047; font-weight: bold; margin-right: 6px; }
+    .faq-a.open { display: block; }
+
+    .contact-box {
+      background: #fff;
+      border-radius: 12px;
+      padding: 28px 24px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      margin-top: 40px;
+    }
+    .contact-box h3 { font-size: 16px; color: #E07048; margin-bottom: 10px; }
+    .contact-box p { font-size: 14px; color: #666; margin-bottom: 16px; }
+    .contact-box a {
+      display: inline-block;
+      background: #E07048;
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    footer {
+      background: #333;
+      color: #aaa;
+      text-align: center;
+      padding: 24px;
+      font-size: 13px;
+    }
+    footer a { color: #ccc; text-decoration: none; margin: 0 8px; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🍚 よくあるご質問</h1>
+  <p>WaCCAに関するよくあるご質問をまとめました。</p>
+</div>
+
+<div class="content">
+
+  <!-- 申し込み・契約 -->
+  <div class="category">
+    <div class="category-title">📝 申し込み・契約について</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">申し込みから利用開始まで、どのくらい時間がかかりますか？<span class="arrow">▼</span></div>
+      <div class="faq-a">申し込みフォームの送信後、平日3〜5営業日以内にセットアップを完了し、ログイン情報をメールでお送りします。土日祝をはさむ場合は日数が延びることがあります。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">無料期間はいつまでですか？<span class="arrow">▼</span></div>
+      <div class="faq-a">契約成立月の月末から2ヶ月後の月末までが無料期間です。例えば6月中に契約した場合、8月31日まで無料でご利用いただけます。7月中の契約であれば9月30日まで無料です。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">契約書や署名は必要ですか？<span class="arrow">▼</span></div>
+      <div class="faq-a">申し込みフォームで利用規約に同意いただくことで契約が成立します。書面での契約書や押印は不要です。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">解約したい場合はどうすればいいですか？<span class="arrow">▼</span></div>
+      <div class="faq-a">wacca.system@gmail.com へメールでご連絡ください。解約の効力は当社が確認した翌月末日に発生します。違約金等は一切ありません。</div>
+    </div>
+  </div>
+
+  <!-- 料金・支払い -->
+  <div class="category">
+    <div class="category-title">💰 料金・お支払いについて</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">料金はいくらですか？<span class="arrow">▼</span></div>
+      <div class="faq-a">月額3,300円（税込）です。無料期間終了後から請求が始まります。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">支払い方法は何がありますか？<span class="arrow">▼</span></div>
+      <div class="faq-a">銀行振込のみです。毎月1日に請求書をメールでお送りします。支払期限はその月の末日です。振込手数料はご負担ください。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">支払いが遅れた場合はどうなりますか？<span class="arrow">▼</span></div>
+      <div class="faq-a">支払期限の7日後に督促メールをお送りします。さらに14日後もお支払いが確認できない場合、サービスを一時停止します。お支払い確認後、すみやかに再開します。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">領収書はもらえますか？<span class="arrow">▼</span></div>
+      <div class="faq-a">ご希望の方にはメールにて領収書をお送りします。wacca.system@gmail.com までご連絡ください。</div>
+    </div>
+  </div>
+
+  <!-- LINEアカウント -->
+  <div class="category">
+    <div class="category-title">📱 LINEアカウントについて</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">LINE公式アカウントは自分で用意する必要がありますか？<span class="arrow">▼</span></div>
+      <div class="faq-a">WaCCAが代理で開設します。すでにLINE公式アカウントをお持ちの場合は、既存のアカウントを連携することも可能です。申し込みフォームにその旨をご記入ください。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">LINE公式アカウントの費用はかかりますか？<span class="arrow">▼</span></div>
+      <div class="faq-a">WaCCAの月額料金（3,300円）に含まれています。LINEの無料プランの範囲内で運用しますので、別途LINE側への費用は発生しません。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">解約した場合、LINEアカウントはどうなりますか？<span class="arrow">▼</span></div>
+      <div class="faq-a">WaCCAが開設したアカウントの取り扱いは、解約時に協議して決定します。ご自身でアカウントを引き継ぎたい場合はお申し出ください。</div>
+    </div>
+  </div>
+
+  <!-- 機能・操作 -->
+  <div class="category">
+    <div class="category-title">🔧 機能・操作について</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">参加者が予約するにはどうすればいいですか？<span class="arrow">▼</span></div>
+      <div class="faq-a">参加者がLINE公式アカウントと友達になり、利用者登録をすることで予約できるようになります。予約・確認・キャンセルすべてLINE上で操作できます。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">参加者の情報（アレルギーなど）は管理できますか？<span class="arrow">▼</span></div>
+      <div class="faq-a">はい。参加者登録時に氏名・電話番号・生年月日・住所を収集します。ダッシュボードの参加者一覧からいつでも確認できます。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">開催日程はどうやって登録しますか？<span class="arrow">▼</span></div>
+      <div class="faq-a">ダッシュボードの「開催日程」タブから日付・場所・時間・持ち物を入力して登録できます。登録した日程はLINEから参加者が確認できるようになります。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">パスワードを忘れた場合はどうすればいいですか？<span class="arrow">▼</span></div>
+      <div class="faq-a">ダッシュボードのログイン画面の「パスワードを忘れた方はこちら」から、登録メールアドレスを入力すると新しいパスワードがメールで届きます。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">複数のスタッフでダッシュボードを使えますか？<span class="arrow">▼</span></div>
+      <div class="faq-a">現在は食堂IDとパスワードを共有する形でご利用ください。スタッフごとのアカウント管理機能は今後追加予定です。</div>
+    </div>
+  </div>
+
+  <!-- セキュリティ・個人情報 -->
+  <div class="category">
+    <div class="category-title">🔒 セキュリティ・個人情報について</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">参加者の個人情報はどこに保存されますか？<span class="arrow">▼</span></div>
+      <div class="faq-a">Googleのサーバー（Googleスプレッドシート）に保存されます。Googleの強固なセキュリティ基盤を活用しており、外部からの不正アクセスを防いでいます。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">個人情報は第三者に提供されますか？<span class="arrow">▼</span></div>
+      <div class="faq-a">法令に基づく場合を除き、第三者への提供は一切行いません。詳しくはプライバシーポリシーをご確認ください。</div>
+    </div>
+  </div>
+
+  <!-- お問い合わせ -->
+  <div class="contact-box">
+    <h3>解決しない場合はお気軽にご連絡ください</h3>
+    <p>WaCCA運営チームがメールにてサポートします。</p>
+    <a href="mailto:wacca.system@gmail.com">wacca.system@gmail.com</a>
+  </div>
+
+</div>
+
+<footer>
+  <div>
+    <a href="index.html">トップ</a>
+    <a href="terms.html">利用規約</a>
+    <a href="privacy.html">プライバシーポリシー</a>
+    <a href="guide.html">操作ガイド</a>
+  </div>
+  <div style="margin-top:10px;">© 2026 WaCCA（合同会社TETOTE）</div>
+</footer>
+
+<script>
+function toggle(el) {
+  el.classList.toggle('open');
+  const answer = el.nextElementSibling;
+  answer.classList.toggle('open');
+}
+</script>
+
+</body>
+</html>
