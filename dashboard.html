@@ -217,6 +217,22 @@
     </div>
     <div id="loginMsg" class="msg"></div>
     <button class="btn btn-full" style="margin-top:8px;" onclick="login()">ログイン</button>
+    <p style="text-align:center; margin-top:14px; font-size:13px;">
+      <a href="#" onclick="showResetForm()" style="color:#E07048;">パスワードを忘れた方はこちら</a>
+    </p>
+  </div>
+
+  <!-- パスワードリセット -->
+  <div id="resetForm" style="display:none; margin-top:16px;">
+    <div class="form-group">
+      <label>登録メールアドレス</label>
+      <input type="email" id="resetEmail" placeholder="登録時のメールアドレス">
+    </div>
+    <div id="resetMsg" class="msg"></div>
+    <button class="btn btn-full" onclick="resetPassword()">新しいパスワードを送信</button>
+    <p style="text-align:center; margin-top:10px; font-size:13px;">
+      <a href="#" onclick="hideResetForm()" style="color:#999;">ログインに戻る</a>
+    </p>
   </div>
 </div>
 
@@ -424,6 +440,32 @@
   function logout() {
     sessionStorage.clear();
     location.reload();
+  }
+
+  function showResetForm() {
+    document.getElementById('resetForm').style.display = 'block';
+    document.getElementById('resetMsg').style.display = 'none';
+    document.getElementById('resetEmail').value = '';
+  }
+
+  function hideResetForm() {
+    document.getElementById('resetForm').style.display = 'none';
+  }
+
+  async function resetPassword() {
+    const email = document.getElementById('resetEmail').value.trim();
+    const msg = document.getElementById('resetMsg');
+    if (!email) { msg.textContent = 'メールアドレスを入力してください。'; msg.style.display = 'block'; msg.style.color = '#e53935'; return; }
+    const res = await fetch(`${GAS_URL}?action=resetPassword&email=${encodeURIComponent(email)}`);
+    const data = await res.json();
+    msg.style.display = 'block';
+    if (data.success) {
+      msg.textContent = '新しいパスワードをメールで送信しました。';
+      msg.style.color = '#2e7d32';
+    } else {
+      msg.textContent = data.message || 'メールアドレスが見つかりませんでした。';
+      msg.style.color = '#e53935';
+    }
   }
 
   function startApp() {
