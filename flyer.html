@@ -285,6 +285,14 @@ function updatePreview() {
   currentMessage  = document.getElementById('message').value || '次回からLINEで簡単に予約できます';
 }
 
+// URLパラメータから自動入力
+window.addEventListener('load', () => {
+  const params = new URLSearchParams(location.search);
+  if (params.get('shopName')) document.getElementById('shopName').value = params.get('shopName');
+  if (params.get('lineUrl'))  document.getElementById('lineUrl').value  = params.get('lineUrl');
+  updatePreview();
+});
+
 function getQRUrl(size) {
   if (!currentLineUrl) return 'https://api.qrserver.com/v1/create-qr-code/?size=' + size + 'x' + size + '&data=https://line.me';
   return 'https://api.qrserver.com/v1/create-qr-code/?size=' + size + 'x' + size + '&data=' + encodeURIComponent(currentLineUrl);

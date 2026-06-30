@@ -393,7 +393,8 @@
           <img id="qrImg" alt="QRコード" style="width:220px; height:220px; border:1px solid #F5CBBA; border-radius:12px; padding:12px; background:#fff;">
           <p style="font-size:12px; color:#999; margin-top:8px;">右クリック（長押し）で画像を保存できます</p>
         </div>
-        <button class="btn btn-full" onclick="window.print()" id="qrPrintBtn" style="display:none;">🖨️ 印刷する</button>
+        <button class="btn btn-full" onclick="window.print()" id="qrPrintBtn" style="display:none;">🖨️ QRだけ印刷する</button>
+        <button class="btn btn-full" onclick="openFlyer()" id="flyerBtn" style="display:none; margin-top:8px; background:#fff; color:#E07048; border:2px solid #E07048;">📄 チラシ・名刺カードを作成する</button>
       </div>
       <div class="card" style="font-size:13px; color:#666; line-height:1.8;">
         <div class="card-title">使い方のヒント</div>
@@ -717,10 +718,18 @@
     const area = document.getElementById('qrArea');
     const img  = document.getElementById('qrImg');
     const btn  = document.getElementById('qrPrintBtn');
-    if (!url) { area.style.display = 'none'; btn.style.display = 'none'; return; }
+    const flyerBtn = document.getElementById('flyerBtn');
+    if (!url) { area.style.display = 'none'; btn.style.display = 'none'; flyerBtn.style.display = 'none'; return; }
     img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(url);
     area.style.display = 'block';
     btn.style.display  = 'block';
+    flyerBtn.style.display = 'block';
+  }
+
+  function openFlyer() {
+    const url      = document.getElementById('lineUrl').value.trim();
+    const params   = new URLSearchParams({ shopName, lineUrl: url });
+    window.open('flyer.html?' + params.toString(), '_blank');
   }
 </script>
 </body>
