@@ -252,6 +252,7 @@
     <div class="tab" onclick="switchTab('users')">👥 利用者</div>
     <div class="tab" onclick="switchTab('mail')">✉️ メール配信</div>
     <div class="tab" onclick="switchTab('qr')">📲 LINE QR</div>
+    <div class="tab" onclick="switchTab('receipt')">🧾 領収書</div>
   </div>
 
   <div class="content">
@@ -406,6 +407,15 @@
       </div>
     </div>
 
+    <!-- 領収書パネル -->
+    <div id="panel-receipt" class="panel">
+      <div class="card">
+        <div class="card-title">🧾 領収書</div>
+        <p style="font-size:13px; color:#666; margin-bottom:16px;">お支払い済みの月の領収書を発行できます。</p>
+        <div id="receiptList"><p style="font-size:13px; color:#aaa;">読み込み中...</p></div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -501,6 +511,7 @@
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     event.target.classList.add('active');
     document.getElementById('panel-' + name).classList.add('active');
+    if (name === 'receipt') loadReceipts();
   }
 
   // ============================================================
@@ -724,6 +735,86 @@
     area.style.display = 'block';
     btn.style.display  = 'block';
     flyerBtn.style.display = 'block';
+  }
+
+  async function loadReceipts() {
+    const res  = await fetch(`${GAS_URL}?action=getReceipts&shopId=${shopId}`);
+    const data = await res.json();
+    const el   = document.getElementById('receiptList');
+    if (data.length === 0) {
+      el.innerHTML = '<p style="font-size:13px; color:#aaa;">支払済みの領収書はまだありません。</p>';
+      return;
+    }
+    el.innerHTML = data.map(r => {
+      const parts = r.billingMonth.split('/');
+      const label = parts[0] + '年' + parts[1] + '月分';
+      return `
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid #f0e8e4;">
+          <div>
+            <div style="font-size:15px; font-weight:bold;">${label}</div>
+            <div style="font-size:12px; color:#888;">支払日：${r.paidDate}　金額：¥${Number(r.amount).toLocaleString()}</div>
+          </div>
+          <button class="btn" style="background:#E07048; color:#fff; font-size:13px; padding:8px 16px;" onclick="printReceipt('${r.billingMonth}','${label}','${r.amount}','${r.paidDate}')">🖨️ 発行</button>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function printReceipt(billingMonth, label, amount, paidDate) {
+    const sealSvg = `<svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="40" cy="40" r="38" fill="none" stroke="#c0392b" stroke-width="3"/>
+      <circle cx="40" cy="40" r="32" fill="none" stroke="#c0392b" stroke-width="1.5"/>
+      <text x="40" y="28" text-anchor="middle" font-size="9" fill="#c0392b" font-family="serif">合同会社</text>
+      <text x="40" y="44" text-anchor="middle" font-size="11" fill="#c0392b" font-family="serif" font-weight="bold">TETOTE</text>
+      <text x="40" y="58" text-anchor="middle" font-size="8" fill="#c0392b" font-family="serif">之印</text>
+    </svg>`;
+
+    const win = window.open('', '_blank');
+    win.document.write(`<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8">
+    <title>領収書 ${label}</title>
+    <style>
+      body { font-family: 'Hiragino Mincho ProN', serif; padding: 60px; max-width: 700px; margin: 0 auto; color: #333; }
+      h1 { text-align: center; font-size: 28px; letter-spacing: 8px; border-bottom: 3px double #333; padding-bottom: 16px; margin-bottom: 32px; }
+      .amount-box { border: 2px solid #333; padding: 16px 24px; text-align: center; margin: 24px 0; }
+      .amount-box .yen { font-size: 32px; font-weight: bold; }
+      .detail { margin: 24px 0; line-height: 2.2; font-size: 15px; }
+      .detail table { width: 100%; border-collapse: collapse; }
+      .detail td { padding: 8px 12px; border-bottom: 1px solid #eee; }
+      .detail td:first-child { color: #666; width: 140px; }
+      .footer { margin-top: 48px; display: flex; justify-content: flex-end; align-items: flex-end; gap: 16px; }
+      .issuer { text-align: right; font-size: 14px; line-height: 2; }
+      .seal { opacity: 0.85; }
+      @media print { button { display: none; } }
+    </style>
+    </head><body>
+    <button onclick="window.print()" style="margin-bottom:20px; padding:10px 24px; background:#E07048; color:#fff; border:none; border-radius:6px; font-size:14px; cursor:pointer;">🖨️ 印刷・PDF保存</button>
+    <h1>領　収　書</h1>
+    <p style="font-size:16px; margin-bottom:8px;"><strong>${shopName} 御中</strong></p>
+    <p style="font-size:14px; color:#666; margin-bottom:24px;">下記の通り、領収いたしました。</p>
+    <div class="amount-box">
+      <div style="font-size:14px; color:#666; margin-bottom:4px;">お支払い金額</div>
+      <div class="yen">¥${Number(amount).toLocaleString()} 円也</div>
+    </div>
+    <div class="detail">
+      <table>
+        <tr><td>件　名</td><td>WaCCA こども食堂予約管理システム ${label} 利用料</td></tr>
+        <tr><td>支払日</td><td>${paidDate}</td></tr>
+        <tr><td>金　額</td><td>¥${Number(amount).toLocaleString()}（税込）</td></tr>
+        <tr><td>但　し</td><td>上記、システム利用料として</td></tr>
+      </table>
+    </div>
+    <div class="footer">
+      <div class="issuer">
+        <div style="font-size:13px; color:#666;">発行者</div>
+        <div>合同会社TETOTE</div>
+        <div style="font-size:13px;">代表社員　年本逸人</div>
+        <div style="font-size:13px;">〒961-0004 福島県白河市萱根金ヶ平50−36</div>
+        <div style="font-size:13px;">wacca.system@gmail.com</div>
+      </div>
+      <div class="seal">${sealSvg}</div>
+    </div>
+    </body></html>`);
+    win.document.close();
   }
 
   function openFlyer() {
