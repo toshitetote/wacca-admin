@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WaCCA チラシ作成</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #FFF4EF; color: #333; }
+
+    .editor {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+    .editor h1 { font-size: 20px; color: #E07048; margin-bottom: 24px; text-align: center; }
+
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 13px; font-weight: bold; color: #555; margin-bottom: 6px; }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .btn-group { display: flex; gap: 10px; margin-top: 20px; }
+    .btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .btn-primary { background: #E07048; color: #fff; }
+    .btn-secondary { background: #fff; color: #E07048; border: 2px solid #E07048; }
+
+    /* 印刷プレビュー */
+    .preview-wrap {
+      display: none;
+      padding: 24px;
+      background: #eee;
+      min-height: 100vh;
+    }
+    .preview-title {
+      text-align: center;
+      margin-bottom: 16px;
+      font-size: 14px;
+      color: #666;
+    }
+    .back-btn {
+      display: block;
+      margin: 0 auto 20px;
+      padding: 10px 24px;
+      background: #E07048;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* A4チラシ */
+    .flyer-a4 {
+      width: 210mm;
+      min-height: 297mm;
+      background: #fff;
+      margin: 0 auto 32px;
+      padding: 20mm 18mm;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .flyer-a4 .top-bar {
+      width: 100%;
+      background: #E07048;
+      color: #fff;
+      text-align: center;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+    .flyer-a4 .shop-name {
+      font-size: 32px;
+      font-weight: bold;
+      color: #333;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .flyer-a4 .tagline {
+      font-size: 16px;
+      color: #E07048;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .flyer-a4 .qr-area {
+      border: 3px solid #E07048;
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 28px;
+      width: 100%;
+    }
+    .flyer-a4 .qr-area img { width: 180px; height: 180px; }
+    .flyer-a4 .qr-label { font-size: 15px; font-weight: bold; color: #E07048; margin-top: 12px; }
+    .flyer-a4 .steps {
+      width: 100%;
+      background: #FFF4EF;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+    }
+    .flyer-a4 .steps h3 { font-size: 15px; font-weight: bold; color: #E07048; margin-bottom: 14px; text-align: center; }
+    .flyer-a4 .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+    .flyer-a4 .step-num {
+      width: 28px;
+      height: 28px;
+      background: #E07048;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+    .flyer-a4 .notice {
+      width: 100%;
+      border: 1px solid #F5CBBA;
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 13px;
+      color: #666;
+      text-align: center;
+    }
+    .flyer-a4 .footer-bar {
+      position: absolute;
+      bottom: 12mm;
+      left: 18mm;
+      right: 18mm;
+      text-align: center;
+      font-size: 11px;
+      color: #aaa;
+    }
+
+    /* 名刺サイズ（91×55mm） */
+    .cards-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8mm;
+      justify-content: center;
+      margin: 0 auto 32px;
+      max-width: 210mm;
+      background: #fff;
+      padding: 15mm;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .card-item {
+      width: 91mm;
+      height: 55mm;
+      border: 2px solid #E07048;
+      border-radius: 6px;
+      display: flex;
+      overflow: hidden;
+      background: #fff;
+    }
+    .card-left {
+      background: #E07048;
+      width: 28mm;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      color: #fff;
+    }
+    .card-left .logo { font-size: 22px; }
+    .card-left .brand { font-size: 9px; font-weight: bold; margin-top: 4px; }
+    .card-right {
+      flex: 1;
+      padding: 6mm 5mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card-shop { font-size: 13px; font-weight: bold; color: #333; line-height: 1.3; }
+    .card-msg { font-size: 8px; color: #666; line-height: 1.4; }
+    .card-qr-wrap { display: flex; align-items: center; gap: 6px; }
+    .card-qr-wrap img { width: 42px; height: 42px; }
+    .card-qr-label { font-size: 8px; color: #E07048; font-weight: bold; line-height: 1.4; }
+
+    @media print {
+      .editor { display: none !important; }
+      .preview-wrap { display: block !important; background: #fff; padding: 0; }
+      .preview-title { display: none; }
+      .back-btn { display: none !important; }
+      .flyer-a4 { box-shadow: none; page-break-after: always; }
+      .cards-wrap { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 編集画面 -->
+<div class="editor" id="editor">
+  <h1>🍚 WaCCA チラシ作成</h1>
+
+  <div class="form-group">
+    <label>食堂名</label>
+    <input type="text" id="shopName" placeholder="例：○○こども食堂" oninput="updatePreview()">
+  </div>
+  <div class="form-group">
+    <label>LINE公式アカウントURL（友達追加URL）</label>
+    <input type="text" id="lineUrl" placeholder="例：https://line.me/R/ti/p/@xxxxx" oninput="updatePreview()">
+  </div>
+  <div class="form-group">
+    <label>案内メッセージ（任意）</label>
+    <input type="text" id="message" placeholder="例：次回からLINEで予約できます！" oninput="updatePreview()">
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="showPrint('a4')">🖨️ A4チラシを印刷</button>
+    <button class="btn btn-secondary" onclick="showPrint('card')">🖨️ 名刺サイズを印刷</button>
+  </div>
+</div>
+
+<!-- 印刷プレビュー -->
+<div class="preview-wrap" id="previewWrap">
+  <div class="preview-title no-print">印刷プレビュー（Cmd+P で印刷）</div>
+  <button class="back-btn no-print" onclick="backToEditor()">← 編集に戻る</button>
+
+  <!-- A4 -->
+  <div id="printA4" style="display:none">
+    <div class="flyer-a4">
+      <div class="top-bar">📱 LINEで予約できるようになりました！</div>
+      <div class="shop-name" id="a4ShopName">食堂名</div>
+      <div class="tagline" id="a4Message">次回からLINEで簡単に予約できます</div>
+      <div class="qr-area">
+        <img id="a4QR" src="" alt="QRコード">
+        <div class="qr-label">📷 QRコードを読み取って友達追加</div>
+      </div>
+      <div class="steps">
+        <h3>📋 ご利用の手順</h3>
+        <div class="step"><div class="step-num">1</div><div>上のQRコードを読み取って、LINEで友達追加する</div></div>
+        <div class="step"><div class="step-num">2</div><div>「利用者登録」から氏名・連絡先を登録する</div></div>
+        <div class="step"><div class="step-num">3</div><div>「予約する」から参加したい開催日を選んで予約完了！</div></div>
+      </div>
+      <div class="notice">
+        開催2日前にリマインドメールをお送りします<br>
+        キャンセルもLINEからいつでも可能です
+      </div>
+      <div class="footer-bar">WaCCA（わっか）こども食堂予約管理システム　powered by 合同会社TETOTE</div>
+    </div>
+  </div>
+
+  <!-- 名刺サイズ（1枚A4に8枚） -->
+  <div id="printCard" style="display:none">
+    <div class="cards-wrap" id="cardsWrap"></div>
+  </div>
+</div>
+
+<script>
+let currentShopName = '';
+let currentLineUrl = '';
+let currentMessage = '';
+
+function updatePreview() {
+  currentShopName = document.getElementById('shopName').value || '食堂名';
+  currentLineUrl  = document.getElementById('lineUrl').value.trim();
+  currentMessage  = document.getElementById('message').value || '次回からLINEで簡単に予約できます';
+}
+
+function getQRUrl(size) {
+  if (!currentLineUrl) return 'https://api.qrserver.com/v1/create-qr-code/?size=' + size + 'x' + size + '&data=https://line.me';
+  return 'https://api.qrserver.com/v1/create-qr-code/?size=' + size + 'x' + size + '&data=' + encodeURIComponent(currentLineUrl);
+}
+
+function showPrint(type) {
+  updatePreview();
+
+  document.getElementById('editor').style.display = 'none';
+  document.getElementById('previewWrap').style.display = 'block';
+  document.getElementById('printA4').style.display = 'none';
+  document.getElementById('printCard').style.display = 'none';
+
+  if (type === 'a4') {
+    document.getElementById('a4ShopName').textContent = currentShopName;
+    document.getElementById('a4Message').textContent = currentMessage;
+    document.getElementById('a4QR').src = getQRUrl(360);
+    document.getElementById('printA4').style.display = 'block';
+  } else {
+    const wrap = document.getElementById('cardsWrap');
+    wrap.innerHTML = '';
+    for (let i = 0; i < 8; i++) {
+      wrap.innerHTML += `
+        <div class="card-item">
+          <div class="card-left">
+            <div class="logo">🍚</div>
+            <div class="brand">WaCCA</div>
+          </div>
+          <div class="card-right">
+            <div class="card-shop">${currentShopName}</div>
+            <div class="card-msg">${currentMessage}</div>
+            <div class="card-qr-wrap">
+              <img src="${getQRUrl(120)}" alt="QR">
+              <div class="card-qr-label">📷 QRを読み取って<br>LINEで友達追加</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    document.getElementById('printCard').style.display = 'block';
+  }
+}
+
+function backToEditor() {
+  document.getElementById('editor').style.display = 'block';
+  document.getElementById('previewWrap').style.display = 'none';
+}
+</script>
+</body>
+</html>
