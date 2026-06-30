@@ -191,6 +191,29 @@
     footer a { color: #ccc; text-decoration: none; margin: 0 8px; }
     footer .company { margin-bottom: 12px; color: #ccc; }
 
+    .site-header {
+      background: #fff;
+      border-bottom: 1px solid #f0e0d8;
+      padding: 0 24px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .site-header .brand { font-size: 16px; font-weight: bold; color: #E07048; }
+    .site-header .login-link {
+      font-size: 13px;
+      color: #E07048;
+      text-decoration: none;
+      border: 1px solid #E07048;
+      padding: 6px 14px;
+      border-radius: 6px;
+    }
+    .site-header .login-link:hover { background: #FFF4EF; }
+
     @media (max-width: 600px) {
       .hero h1 { font-size: 22px; }
       .price-card .price { font-size: 40px; }
@@ -198,6 +221,11 @@
   </style>
 </head>
 <body>
+
+<header class="site-header">
+  <div class="brand">🍚 WaCCA</div>
+  <a class="login-link" href="dashboard.html">管理画面ログイン</a>
+</header>
 
 <!-- ヒーロー -->
 <div class="hero">
