@@ -96,7 +96,7 @@
       background: #FAFAFA;
       font-family: inherit;
     }
-    input[type="date"] { font-size: 16px; }
+    input[type="date"] { font-size: 16px; -webkit-appearance: none; appearance: none; }
     input:focus, select:focus, textarea:focus {
       outline: none;
       border-color: #E07048;
@@ -281,9 +281,7 @@
         <div class="card-title">新しい開催日を追加</div>
         <div class="form-group">
           <label>開催日</label>
-          <div style="width:100%; overflow:hidden;">
-            <input type="date" id="sch_date" style="width:100%; min-width:0;">
-          </div>
+          <input type="date" id="sch_date">
         </div>
         <div class="form-group">
           <label>時間</label>
