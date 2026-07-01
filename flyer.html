@@ -158,52 +158,6 @@
       color: #aaa;
     }
 
-    /* 名刺サイズ（91×55mm） */
-    .cards-wrap {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8mm;
-      justify-content: center;
-      margin: 0 auto 32px;
-      max-width: 210mm;
-      background: #fff;
-      padding: 15mm;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    }
-    .card-item {
-      width: 91mm;
-      height: 55mm;
-      border: 2px solid #E07048;
-      border-radius: 6px;
-      display: flex;
-      overflow: hidden;
-      background: #fff;
-    }
-    .card-left {
-      background: #E07048;
-      width: 28mm;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 4px;
-      color: #fff;
-    }
-    .card-left .logo { font-size: 22px; }
-    .card-left .brand { font-size: 9px; font-weight: bold; margin-top: 4px; }
-    .card-right {
-      flex: 1;
-      padding: 6mm 5mm;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .card-shop { font-size: 13px; font-weight: bold; color: #333; line-height: 1.3; }
-    .card-msg { font-size: 8px; color: #666; line-height: 1.4; }
-    .card-qr-wrap { display: flex; align-items: center; gap: 6px; }
-    .card-qr-wrap img { width: 42px; height: 42px; }
-    .card-qr-label { font-size: 8px; color: #E07048; font-weight: bold; line-height: 1.4; }
-
     @media print {
       .editor { display: none !important; }
       .preview-wrap { display: block !important; background: #fff; padding: 0; }
@@ -308,40 +262,12 @@ function getQRUrl(size) {
 
 function showPrint(type) {
   updatePreview();
-
   document.getElementById('editor').style.display = 'none';
   document.getElementById('previewWrap').style.display = 'block';
-  document.getElementById('printA4').style.display = 'none';
-  document.getElementById('printCard').style.display = 'none';
-
-  if (type === 'a4') {
-    document.getElementById('a4ShopName').textContent = currentShopName;
-    document.getElementById('a4Message').textContent = currentMessage;
-    document.getElementById('a4QR').src = getQRUrl(360);
-    document.getElementById('printA4').style.display = 'block';
-  } else {
-    const wrap = document.getElementById('cardsWrap');
-    wrap.innerHTML = '';
-    for (let i = 0; i < 8; i++) {
-      wrap.innerHTML += `
-        <div class="card-item">
-          <div class="card-left">
-            <div class="logo">🍚</div>
-            <div class="brand">WaCCA</div>
-          </div>
-          <div class="card-right">
-            <div class="card-shop">${currentShopName}</div>
-            <div class="card-msg">${currentMessage}</div>
-            <div class="card-qr-wrap">
-              <img src="${getQRUrl(120)}" alt="QR">
-              <div class="card-qr-label">📷 QRを読み取って<br>LINEで友達追加</div>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-    document.getElementById('printCard').style.display = 'block';
-  }
+  document.getElementById('a4ShopName').textContent = currentShopName;
+  document.getElementById('a4Message').textContent = currentMessage;
+  document.getElementById('a4QR').src = getQRUrl(360);
+  document.getElementById('printA4').style.display = 'block';
 }
 
 function backToEditor() {
