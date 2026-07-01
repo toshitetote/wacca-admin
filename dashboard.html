@@ -67,6 +67,8 @@
       padding: 20px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.06);
       margin-bottom: 16px;
+      min-width: 0;
+      overflow: hidden;
     }
     .card-title {
       font-size: 14px;
@@ -123,8 +125,8 @@
     /* テーブル */
     .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
     @media (max-width: 480px) {
-      .hide-sp { display: none; }
-      table { font-size: 12px; }
+      table { font-size: 11px; }
+      th, td { padding: 6px 8px; }
     }
     table { width: 100%; border-collapse: collapse; font-size: 13px; }
     th {
@@ -295,7 +297,7 @@
         <div class="table-wrap">
           <table id="scheduleTable">
             <thead>
-              <tr><th>開催日</th><th>時間</th><th>場所</th><th class="hide-sp">持ち物</th><th>状態</th><th>操作</th></tr>
+              <tr><th>開催日</th><th>時間</th><th>場所</th><th>持ち物</th><th>状態</th><th>操作</th></tr>
             </thead>
             <tbody id="scheduleTbody">
               <tr><td colspan="6" class="empty">読み込み中...</td></tr>
@@ -571,7 +573,7 @@
         <td>${s.date}</td>
         <td>${s.time}</td>
         <td>${s.location}</td>
-        <td class="hide-sp">${s.items}</td>
+        <td>${s.items}</td>
         <td><span class="badge ${s.status === '開催' ? 'badge-open' : 'badge-cancel'}">${s.status}</span></td>
         <td>
           ${s.status === '開催'
