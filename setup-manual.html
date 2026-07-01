@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WaCCA 食堂セットアップ手順書（運営者用）</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, 'Hiragino Sans', sans-serif;
+      color: #333;
+      line-height: 1.8;
+      padding: 40px 48px 60px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .cover {
+      text-align: center;
+      padding: 60px 0 48px;
+      border-bottom: 3px solid #E07048;
+      margin-bottom: 40px;
+    }
+    .cover h1 { font-size: 26px; color: #E07048; margin-bottom: 10px; }
+    .cover p { font-size: 13px; color: #888; }
+
+    h2 {
+      font-size: 18px;
+      color: #E07048;
+      border-left: 5px solid #E07048;
+      padding-left: 12px;
+      margin: 40px 0 16px;
+    }
+    h3 {
+      font-size: 15px;
+      font-weight: bold;
+      color: #333;
+      margin: 20px 0 8px;
+      padding-left: 8px;
+      border-left: 3px solid #F5CBBA;
+    }
+    p { font-size: 14px; color: #444; margin-bottom: 10px; }
+    ul, ol { padding-left: 24px; margin-bottom: 12px; }
+    li { font-size: 14px; color: #444; margin-bottom: 6px; }
+
+    .step {
+      background: #FFF4EF;
+      border: 1px solid #F5CBBA;
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 10px;
+    }
+    .step-num {
+      display: inline-block;
+      background: #E07048;
+      color: #fff;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 6px;
+    }
+    .step p { margin: 0; }
+
+    .notice {
+      background: #FFF4EF;
+      border-left: 4px solid #E07048;
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin: 12px 0;
+      font-size: 13px;
+      color: #555;
+    }
+    .warn {
+      background: #FFF8E1;
+      border-left: 4px solid #FFA000;
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin: 12px 0;
+      font-size: 13px;
+      color: #555;
+    }
+
+    .check-list { list-style: none; padding-left: 0; }
+    .check-list li {
+      padding: 10px 14px;
+      border-bottom: 1px solid #F0F0F0;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .check-list li:last-child { border-bottom: none; }
+    .check-list .box {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #E07048;
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .code {
+      background: #F5F5F5;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-family: monospace;
+      color: #333;
+      margin: 8px 0;
+      word-break: break-all;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+    th { background: #E07048; color: #fff; padding: 8px 12px; text-align: left; }
+    td { padding: 8px 12px; border-bottom: 1px solid #F0F0F0; vertical-align: top; }
+    tr:nth-child(even) td { background: #FFF4EF; }
+
+    hr { border: none; border-top: 1px solid #EEE; margin: 32px 0; }
+
+    .print-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #E07048;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    @media print {
+      body { padding: 20px 32px; }
+      .print-btn { display: none; }
+      h2 { page-break-before: always; }
+      h2:first-of-type { page-break-before: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>🍚 WaCCA<br>食堂セットアップ手順書</h1>
+  <p>新規食堂のLINE公式アカウント連携からWaCCA登録までの運営者向け手順書<br>合同会社TETOTE 内部資料</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>1. 先方に確認すべき事項</h2>
+
+<p>セットアップ開始前に以下の情報を食堂側から収集してください。</p>
+
+<table>
+  <thead>
+    <tr><th>確認項目</th><th>内容・備考</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>食堂名</td><td>正式名称。チラシ・LINE・システムに表示される</td></tr>
+    <tr><td>責任者名</td><td>運営責任者のフルネーム</td></tr>
+    <tr><td>メールアドレス</td><td>WaCCAからの通知・請求書送付先</td></tr>
+    <tr><td>電話番号</td><td>緊急連絡先</td></tr>
+    <tr><td>住所</td><td>食堂の所在地</td></tr>
+    <tr><td>大人の利用料金</td><td>0円（無料）の場合もあり</td></tr>
+    <tr><td>こどもの利用料金</td><td>0円（無料）の場合もあり</td></tr>
+    <tr><td>LINE公式アカウントの有無</td><td>既存OAがある場合は管理者招待が必要</td></tr>
+    <tr><td>LINE公式アカウントの管理メール</td><td>Webhookを設定するためにログインが必要</td></tr>
+  </tbody>
+</table>
+
+<div class="warn">
+  ⚠️ LINE公式アカウントはWaCCAが管理権限を持つ必要があります。先方に「管理者として招待する」か、アカウント情報を共有してもらう形で対応してください。
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2>2. LINE公式アカウントの開設・設定</h2>
+
+<h3>2-1. アカウントが既にある場合</h3>
+<ul>
+  <li>LINE Official Account Managerにログインして管理者として招待してもらう</li>
+  <li>または先方のアカウント情報を受け取ってWaCCA側で設定する</li>
+</ul>
+
+<h3>2-2. 新規開設する場合</h3>
+<div class="step"><span class="step-num">STEP 1</span><p><a href="https://www.linebiz.com/jp/entry/">https://www.linebiz.com/jp/entry/</a> からアカウントを作成</p></div>
+<div class="step"><span class="step-num">STEP 2</span><p>アカウント名を食堂名に設定（例：○○こども食堂）</p></div>
+<div class="step"><span class="step-num">STEP 3</span><p>業種：「非営利団体・ボランティア」などを選択</p></div>
+
+<h3>2-3. 必須の設定変更</h3>
+
+<p><strong>① 応答メッセージをOFFにする</strong></p>
+<div class="step"><span class="step-num">設定箇所</span><p>LINE Official Account Manager →「設定」→「応答設定」→「応答モード」を「Bot」に変更<br>「あいさつメッセージ」「応答メッセージ」をすべてOFF</p></div>
+<div class="notice">
+  💡 OFFにしないと、利用者がボタンを押したときに「個別のやりとりはできません」などのメッセージが自動送信されてしまいます。
+</div>
+
+<p><strong>② Webhookを有効にする</strong></p>
+<div class="step"><span class="step-num">設定箇所</span><p>「設定」→「Messaging API」→「Webhook設定」→「Webhookの利用」をONにする</p></div>
+<div class="step"><span class="step-num">Webhook URL</span><p>以下のURLを設定してください（shopIdは食堂ごとに異なる）：</p></div>
+<div class="code">https://script.google.com/macros/s/AKfycbym2Gzed66_kHtluEeWp0IQtoB0WnjBKVz1wMEIVB88BBp09iji91KHft8sCUVbQU-IKw/exec?shopId=【食堂ID】</div>
+
+<p><strong>③ チャンネルアクセストークンを発行する</strong></p>
+<div class="step"><span class="step-num">設定箇所</span><p>「設定」→「Messaging API」→「チャンネルアクセストークン（長期）」→「発行」</p></div>
+<div class="notice">
+  💡 発行したトークンは食堂マスタのLINEトークン列に登録します。
+</div>
+
+<p><strong>④ LIFFアプリを登録する</strong></p>
+<div class="step"><span class="step-num">設定箇所</span><p>LINE Developersコンソール（<a href="https://developers.line.biz">developers.line.biz</a>）→ チャネル →「LIFF」タブ → 追加</p></div>
+<div class="step"><span class="step-num">LIFF URL</span><p>以下を設定：</p></div>
+<div class="code">https://wacca-system.jp/liff.html?shopId=【食堂ID】</div>
+<div class="step"><span class="step-num">STEP</span><p>発行されたLIFF IDを食堂マスタのLIFF_ID列に登録する</p></div>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2>3. 食堂マスタへの登録</h2>
+
+<p>中央スプレッドシートの「食堂マスタ」シートに1行追加します。</p>
+
+<table>
+  <thead>
+    <tr><th>列</th><th>項目</th><th>内容</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>A</td><td>食堂ID</td><td>S001, S002 … の連番。既存の最大番号+1</td></tr>
+    <tr><td>B</td><td>食堂名</td><td>正式名称</td></tr>
+    <tr><td>C</td><td>運営者名</td><td>責任者名</td></tr>
+    <tr><td>D</td><td>メールアドレス</td><td>請求書・通知の送付先</td></tr>
+    <tr><td>E</td><td>電話番号</td><td></td></tr>
+    <tr><td>F</td><td>住所</td><td></td></tr>
+    <tr><td>G</td><td>LINEトークン</td><td>Messaging APIで発行したトークン</td></tr>
+    <tr><td>H</td><td>LIFF_ID</td><td>LINE DevelopersのLIFF ID</td></tr>
+    <tr><td>I</td><td>大人料金</td><td>数値（円）</td></tr>
+    <tr><td>J</td><td>こども料金</td><td>数値（円）</td></tr>
+    <tr><td>K</td><td>使用開始日</td><td>yyyy/mm/dd形式</td></tr>
+    <tr><td>L</td><td>無料終了日</td><td>登録月末+2ヶ月末（例：7月登録→9月30日）</td></tr>
+    <tr><td>M</td><td>プラン</td><td>「スタンダード」など</td></tr>
+    <tr><td>N</td><td>状態</td><td>「無料期間中」「利用中」「停止中」</td></tr>
+    <tr><td>O</td><td>登録日時</td><td>登録した日時</td></tr>
+    <tr><td>P</td><td>パスワード</td><td>自動発行（8文字ランダム）</td></tr>
+  </tbody>
+</table>
+
+<div class="notice">
+  💡 Googleフォームからの申し込みがあった場合はA〜F・I・J・O・Pは自動入力されます。G（LINEトークン）とH（LIFF ID）はLINE側の設定後に手動で入力が必要です。
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2>4. リッチメニューの設定</h2>
+
+<p>LINE Official Account Managerの「リッチメニュー」から設定します。</p>
+
+<h3>推奨ボタン構成</h3>
+<ul>
+  <li>予約する　→　LIFF URL（liff.me/…）</li>
+  <li>予約確認・キャンセル　→　LIFF URL</li>
+  <li>次の開催日　→　テキスト送信「次の開催日」</li>
+</ul>
+
+<div class="warn">
+  ⚠️ リッチメニューのLIFF URLは各食堂のLIFF IDに紐づきます。コピーする場合はLIFF IDが正しいか確認してください。
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2>5. セットアップ完了チェックリスト</h2>
+
+<ul class="check-list">
+  <li><span class="box"></span>食堂マスタに1行登録済み（全列）</li>
+  <li><span class="box"></span>LINE公式アカウントの応答メッセージをOFF・BotモードにON</li>
+  <li><span class="box"></span>WebhookのURLを設定し「検証」でOKが出た</li>
+  <li><span class="box"></span>チャンネルアクセストークンを発行し食堂マスタに記入</li>
+  <li><span class="box"></span>LIFFアプリを作成し食堂マスタに記入</li>
+  <li><span class="box"></span>リッチメニューを設定</li>
+  <li><span class="box"></span>ウェルカムメールが届いていることを確認（食堂側に確認）</li>
+  <li><span class="box"></span>テスト予約を1件入れて動作確認</li>
+  <li><span class="box"></span>ダッシュボードにログインできることを確認（食堂側に確認）</li>
+</ul>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2>6. よくあるトラブル</h2>
+
+<table>
+  <thead>
+    <tr><th>症状</th><th>原因・対処</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>ボタンを押すと「個別のやりとりはできません」と出る</td><td>応答モードがBotになっていない → 応答設定を確認</td></tr>
+    <tr><td>LIFFが開かない</td><td>LIFF IDが食堂マスタと不一致 → H列を確認</td></tr>
+    <tr><td>予約しても反応がない</td><td>WebhookのURLが間違っている、またはshopIdが違う → G列・Webhook URLを確認</td></tr>
+    <tr><td>メッセージが送信されない</td><td>LINEトークンが失効または未設定 → Messaging APIで再発行</td></tr>
+    <tr><td>ダッシュボードにログインできない</td><td>食堂IDまたはパスワードが違う → P列のパスワードを確認</td></tr>
+  </tbody>
+</table>
+
+<button class="print-btn" onclick="window.print()">🖨️ PDF保存・印刷</button>
+
+</body>
+</html>
