@@ -207,32 +207,36 @@
   <div class="login-card">
     <h2>🍚 WaCCA</h2>
     <p>こども食堂マイページ</p>
-    <div class="form-group">
-      <label>食堂ID</label>
-      <input type="text" id="loginShopId" placeholder="例：S001">
-    </div>
-    <div class="form-group">
-      <label>パスワード</label>
-      <input type="password" id="loginPassword" placeholder="登録メールに記載のパスワード">
-    </div>
-    <div id="loginMsg" class="msg"></div>
-    <button class="btn btn-full" style="margin-top:8px;" onclick="login()">ログイン</button>
-    <p style="text-align:center; margin-top:14px; font-size:13px;">
-      <a href="#" onclick="showResetForm()" style="color:#E07048;">パスワードを忘れた方はこちら</a>
-    </p>
-  </div>
 
-  <!-- パスワードリセット -->
-  <div id="resetForm" style="display:none; margin-top:16px;">
-    <div class="form-group">
-      <label>登録メールアドレス</label>
-      <input type="email" id="resetEmail" placeholder="登録時のメールアドレス">
+    <!-- ログインフォーム -->
+    <div id="loginForm">
+      <div class="form-group">
+        <label>食堂ID</label>
+        <input type="text" id="loginShopId" placeholder="例：S001">
+      </div>
+      <div class="form-group">
+        <label>パスワード</label>
+        <input type="password" id="loginPassword" placeholder="登録メールに記載のパスワード">
+      </div>
+      <div id="loginMsg" class="msg"></div>
+      <button class="btn btn-full" style="margin-top:8px;" onclick="login()">ログイン</button>
+      <p style="text-align:center; margin-top:14px; font-size:13px;">
+        <a href="#" onclick="showResetForm()" style="color:#E07048;">パスワードを忘れた方はこちら</a>
+      </p>
     </div>
-    <div id="resetMsg" class="msg"></div>
-    <button class="btn btn-full" onclick="resetPassword()">新しいパスワードを送信</button>
-    <p style="text-align:center; margin-top:10px; font-size:13px;">
-      <a href="#" onclick="hideResetForm()" style="color:#999;">ログインに戻る</a>
-    </p>
+
+    <!-- パスワードリセットフォーム -->
+    <div id="resetForm" style="display:none;">
+      <div class="form-group">
+        <label>登録メールアドレス</label>
+        <input type="email" id="resetEmail" placeholder="登録時のメールアドレス">
+      </div>
+      <div id="resetMsg" class="msg"></div>
+      <button class="btn btn-full" onclick="resetPassword()">新しいパスワードを送信</button>
+      <p style="text-align:center; margin-top:10px; font-size:13px;">
+        <a href="#" onclick="hideResetForm()" style="color:#999;">ログインに戻る</a>
+      </p>
+    </div>
   </div>
 </div>
 
@@ -454,6 +458,7 @@
   }
 
   function showResetForm() {
+    document.getElementById('loginForm').style.display = 'none';
     document.getElementById('resetForm').style.display = 'block';
     document.getElementById('resetMsg').style.display = 'none';
     document.getElementById('resetEmail').value = '';
@@ -461,6 +466,7 @@
 
   function hideResetForm() {
     document.getElementById('resetForm').style.display = 'none';
+    document.getElementById('loginForm').style.display = 'block';
   }
 
   async function resetPassword() {
