@@ -181,18 +181,29 @@
 <!-- ============================================================ -->
 <h2>2. LINE公式アカウントの開設・設定</h2>
 
-<h3>2-1. アカウントが既にある場合</h3>
+<div class="notice">
+  💡 WaCCAでは食堂ごとに2つのLINEチャネルを使います。<br>
+  ① <strong>Messaging APIチャネル</strong>：メッセージ送受信・Webhook用<br>
+  ② <strong>LINEログインチャネル</strong>：LIFFアプリ（予約フォーム）用<br>
+  どちらもWaCCA側（合同会社TETOTE）のLINE Developersプロバイダー内で設定します。
+</div>
+
+<h3>2-1. 公式アカウントの準備</h3>
+
+<p><strong>既存OAがある場合</strong></p>
 <ul>
-  <li>LINE Official Account Managerにログインして管理者として招待してもらう</li>
-  <li>または先方のアカウント情報を受け取ってWaCCA側で設定する</li>
+  <li>LINE Official Account Managerにログインして管理者としてWaCCA側を招待してもらう</li>
+  <li>または先方のアカウント情報を受け取りWaCCA側で設定する</li>
 </ul>
 
-<h3>2-2. 新規開設する場合</h3>
+<p><strong>新規開設する場合</strong></p>
 <div class="step"><span class="step-num">STEP 1</span><p><a href="https://www.linebiz.com/jp/entry/">https://www.linebiz.com/jp/entry/</a> からアカウントを作成</p></div>
 <div class="step"><span class="step-num">STEP 2</span><p>アカウント名を食堂名に設定（例：○○こども食堂）</p></div>
 <div class="step"><span class="step-num">STEP 3</span><p>業種：「非営利団体・ボランティア」などを選択</p></div>
 
-<h3>2-3. 必須の設定変更</h3>
+<h3>2-2. Messaging APIチャネルの設定</h3>
+
+<p>LINE Developersコンソール（<a href="https://developers.line.biz">developers.line.biz</a>）→ WaCCAプロバイダー → 「新規チャネル作成」→「Messaging API」</p>
 
 <p><strong>① 応答メッセージをOFFにする</strong></p>
 <div class="step"><span class="step-num">設定箇所</span><p>LINE Official Account Manager →「設定」→「応答設定」→「応答モード」を「Bot」に変更<br>「あいさつメッセージ」「応答メッセージ」をすべてOFF</p></div>
@@ -201,21 +212,29 @@
 </div>
 
 <p><strong>② Webhookを有効にする</strong></p>
-<div class="step"><span class="step-num">設定箇所</span><p>「設定」→「Messaging API」→「Webhook設定」→「Webhookの利用」をONにする</p></div>
-<div class="step"><span class="step-num">Webhook URL</span><p>以下のURLを設定してください（shopIdは食堂ごとに異なる）：</p></div>
+<div class="step"><span class="step-num">設定箇所</span><p>LINE Developersコンソール → チャネル →「Messaging API設定」→「Webhook設定」→「Webhookの利用」をON</p></div>
+<div class="step"><span class="step-num">Webhook URL</span><p>以下を設定（shopIdは食堂ごとに異なる）：</p></div>
 <div class="code">https://script.google.com/macros/s/AKfycbym2Gzed66_kHtluEeWp0IQtoB0WnjBKVz1wMEIVB88BBp09iji91KHft8sCUVbQU-IKw/exec?shopId=【食堂ID】</div>
 
 <p><strong>③ チャンネルアクセストークンを発行する</strong></p>
-<div class="step"><span class="step-num">設定箇所</span><p>「設定」→「Messaging API」→「チャンネルアクセストークン（長期）」→「発行」</p></div>
+<div class="step"><span class="step-num">設定箇所</span><p>「Messaging API設定」→「チャンネルアクセストークン（長期）」→「発行」</p></div>
 <div class="notice">
-  💡 発行したトークンは食堂マスタのLINEトークン列に登録します。
+  💡 発行したトークンは食堂マスタのG列（LINEトークン）に登録します。
 </div>
 
-<p><strong>④ LIFFアプリを登録する</strong></p>
-<div class="step"><span class="step-num">設定箇所</span><p>LINE Developersコンソール（<a href="https://developers.line.biz">developers.line.biz</a>）→ チャネル →「LIFF」タブ → 追加</p></div>
-<div class="step"><span class="step-num">LIFF URL</span><p>以下を設定：</p></div>
+<h3>2-3. LINEログインチャネルの設定（LIFF用）</h3>
+
+<p>LINE Developersコンソール → WaCCAプロバイダー → 「新規チャネル作成」→「LINEログイン」</p>
+
+<div class="step"><span class="step-num">STEP 1</span><p>チャネル名：食堂名（例：○○こども食堂 予約）</p></div>
+<div class="step"><span class="step-num">STEP 2</span><p>「LINEログイン設定」→「LIFF」タブ →「追加」</p></div>
+<div class="step"><span class="step-num">STEP 3</span><p>LIFF名：食堂名、サイズ：Full、エンドポイントURLに以下を設定：</p></div>
 <div class="code">https://wacca-system.jp/liff.html?shopId=【食堂ID】</div>
-<div class="step"><span class="step-num">STEP</span><p>発行されたLIFF IDを食堂マスタのLIFF_ID列に登録する</p></div>
+<div class="step"><span class="step-num">STEP 4</span><p>発行されたLIFF IDを食堂マスタのH列（LIFF_ID）に登録する</p></div>
+
+<div class="warn">
+  ⚠️ LINEログインチャネルとMessaging APIチャネルは別物です。LIFF IDはログインチャネル側で発行されます。間違えないよう注意してください。
+</div>
 
 <hr>
 
