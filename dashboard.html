@@ -269,6 +269,7 @@
     <div class="tab" onclick="switchTab('qr')">📄 チラシ作成</div>
     <div class="tab" onclick="switchTab('receipt')">🧾 領収書</div>
     <div class="tab" onclick="switchTab('settings')">📋 登録情報</div>
+    <div class="tab" onclick="switchTab('contact')">💬 問い合わせ</div>
   </div>
 
   <div class="content">
@@ -425,6 +426,24 @@
         <div class="card-title">🧾 領収書</div>
         <p style="font-size:13px; color:#666; margin-bottom:16px;">お支払い済みの月の領収書を発行できます。</p>
         <div id="receiptList"><p style="font-size:13px; color:#aaa;">読み込み中...</p></div>
+      </div>
+    </div>
+
+    <!-- 問い合わせパネル -->
+    <div id="panel-contact" class="panel">
+      <div class="card">
+        <div class="card-title">💬 WaCCAへのお問い合わせ</div>
+        <p style="font-size:14px; color:#666; margin-bottom:16px;">ご不明な点やご要望はこちらからお送りください。</p>
+        <div class="form-group">
+          <label>件名</label>
+          <input type="text" id="contact_subject" placeholder="例：予約機能について">
+        </div>
+        <div class="form-group">
+          <label>本文</label>
+          <textarea id="contact_body" rows="6" placeholder="お問い合わせ内容をご記入ください"></textarea>
+        </div>
+        <button class="btn btn-full" onclick="sendContact()">送信する</button>
+        <div id="contactMsg" style="display:none; margin-top:12px;"></div>
       </div>
     </div>
 
@@ -914,6 +933,22 @@
     const message = document.getElementById('flyerMessage').value.trim();
     const params  = new URLSearchParams({ shopName: name, lineUrl, message, mode: 'smartphone' });
     window.open('flyer.html?' + params.toString(), '_blank');
+  }
+
+  async function sendContact() {
+    const subject = document.getElementById('contact_subject').value.trim();
+    const body    = document.getElementById('contact_body').value.trim();
+    if (!subject || !body) { showMsg('contactMsg', 'error', '件名と本文を入力してください。'); return; }
+    const params = new URLSearchParams({ action: 'sendContact', shopId, shopName, subject, body });
+    const res    = await fetch(`${GAS_URL}?${params}`);
+    const result = await res.json();
+    if (result.success) {
+      showMsg('contactMsg', 'success', '送信しました。内容を確認の上、ご返信いたします。');
+      document.getElementById('contact_subject').value = '';
+      document.getElementById('contact_body').value    = '';
+    } else {
+      showMsg('contactMsg', 'error', '送信に失敗しました。時間をおいて再度お試しください。');
+    }
   }
 
   async function loadShopInfo() {
