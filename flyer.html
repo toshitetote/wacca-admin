@@ -296,7 +296,9 @@ window.addEventListener('load', () => {
   const params = new URLSearchParams(location.search);
   if (params.get('shopName')) document.getElementById('shopName').value = params.get('shopName');
   if (params.get('lineUrl'))  document.getElementById('lineUrl').value  = params.get('lineUrl');
+  if (params.get('message'))  document.getElementById('message').value  = params.get('message');
   updatePreview();
+  if (params.get('mode') === 'smartphone') showSmartphone();
 });
 
 function getQRUrl(size) {

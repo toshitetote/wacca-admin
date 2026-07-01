@@ -255,7 +255,7 @@
     <div class="tab" onclick="switchTab('reservation')">📋 予約確認</div>
     <div class="tab" onclick="switchTab('users')">👥 利用者</div>
     <div class="tab" onclick="switchTab('mail')">✉️ メール配信</div>
-    <div class="tab" onclick="switchTab('qr')">📲 LINE QR</div>
+    <div class="tab" onclick="switchTab('qr')">📄 チラシ作成</div>
     <div class="tab" onclick="switchTab('receipt')">🧾 領収書</div>
   </div>
 
@@ -382,30 +382,28 @@
       </div>
     </div>
 
-    <!-- LINE QRパネル -->
+    <!-- チラシ作成パネル -->
     <div id="panel-qr" class="panel">
       <div class="card">
-        <div class="card-title">📲 LINE 友だち追加QRコード</div>
-        <p style="font-size:13px; color:#666; margin-bottom:16px;">LINE公式アカウントの友だち追加URLを入力するとQRコードが生成されます。チラシや店頭に掲示して利用者に友だち追加してもらいましょう。</p>
+        <div class="card-title">📄 チラシ作成</div>
+        <p style="font-size:13px; color:#666; margin-bottom:16px;">A4チラシを印刷して食堂の入口に貼ったり、地域に配布しましょう。</p>
+        <div class="form-group">
+          <label>食堂名</label>
+          <input type="text" id="flyerShopName" placeholder="例：○○こども食堂">
+        </div>
         <div class="form-group">
           <label>LINE 友だち追加URL</label>
-          <input type="text" id="lineUrl" placeholder="https://line.me/R/ti/p/@xxxxxxxx" oninput="generateQR()">
+          <input type="text" id="lineUrl" placeholder="https://line.me/R/ti/p/@xxxxxxxx">
+          <p style="font-size:11px; color:#999; margin-top:4px;">LINEアプリ → 公式アカウント管理 → アカウント情報 → 友だち追加URLで確認できます</p>
         </div>
-        <p style="font-size:11px; color:#999; margin-bottom:16px;">LINEアプリ → 公式アカウント管理 → アカウント情報 → 友だち追加URLで確認できます</p>
-        <div id="qrArea" style="display:none; text-align:center; margin-bottom:20px;">
-          <img id="qrImg" alt="QRコード" style="width:220px; height:220px; border:1px solid #F5CBBA; border-radius:12px; padding:12px; background:#fff;">
-          <p style="font-size:12px; color:#999; margin-top:8px;">右クリック（長押し）で画像を保存できます</p>
+        <div class="form-group">
+          <label>案内メッセージ（任意）</label>
+          <input type="text" id="flyerMessage" placeholder="例：次回からLINEで予約できます！">
         </div>
-        <button class="btn btn-full" onclick="window.print()" id="qrPrintBtn" style="display:none;">🖨️ QRだけ印刷する</button>
-        <button class="btn btn-full" onclick="openFlyer()" id="flyerBtn" style="display:none; margin-top:8px; background:#fff; color:#E07048; border:2px solid #E07048;">📄 チラシ・名刺カードを作成する</button>
-      </div>
-      <div class="card" style="font-size:13px; color:#666; line-height:1.8;">
-        <div class="card-title">使い方のヒント</div>
-        <ul style="padding-left:18px;">
-          <li>A4用紙に印刷して食堂の入口に貼る</li>
-          <li>チラシにQRを載せて地域に配布する</li>
-          <li>画像を保存してSNSに掲載する</li>
-        </ul>
+        <div style="display:flex; gap:10px; margin-top:8px;">
+          <button class="btn btn-full" onclick="openFlyer()">🖨️ A4チラシを印刷</button>
+          <button class="btn btn-full" onclick="openFlyerSmartphone()" style="background:#fff; color:#E07048; border:2px solid #E07048;">📱 スマホで表示</button>
+        </div>
       </div>
     </div>
 
@@ -516,6 +514,10 @@
     event.target.classList.add('active');
     document.getElementById('panel-' + name).classList.add('active');
     if (name === 'receipt') loadReceipts();
+    if (name === 'qr') {
+      const el = document.getElementById('flyerShopName');
+      if (el && !el.value) el.value = shopName;
+    }
   }
 
   // ============================================================
@@ -834,10 +836,21 @@
   }
 
   function openFlyer() {
-    const url      = document.getElementById('lineUrl').value.trim();
-    const params   = new URLSearchParams({ shopName, lineUrl: url });
+    const name    = document.getElementById('flyerShopName').value.trim() || shopName;
+    const lineUrl = document.getElementById('lineUrl').value.trim();
+    const message = document.getElementById('flyerMessage').value.trim();
+    const params  = new URLSearchParams({ shopName: name, lineUrl, message });
     window.open('flyer.html?' + params.toString(), '_blank');
   }
+
+  function openFlyerSmartphone() {
+    const name    = document.getElementById('flyerShopName').value.trim() || shopName;
+    const lineUrl = document.getElementById('lineUrl').value.trim();
+    const message = document.getElementById('flyerMessage').value.trim();
+    const params  = new URLSearchParams({ shopName: name, lineUrl, message, mode: 'smartphone' });
+    window.open('flyer.html?' + params.toString(), '_blank');
+  }
+
 </script>
 </body>
 </html>
