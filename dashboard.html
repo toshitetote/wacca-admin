@@ -281,7 +281,11 @@
         <div class="card-title">新しい開催日を追加</div>
         <div class="form-group">
           <label>開催日</label>
-          <input type="date" id="sch_date">
+          <div style="display:flex; gap:8px;">
+            <select id="sch_year" style="flex:3;"></select>
+            <select id="sch_month" style="flex:2;"></select>
+            <select id="sch_day" style="flex:2;"></select>
+          </div>
         </div>
         <div class="form-group">
           <label>時間</label>
@@ -573,6 +577,7 @@
     document.getElementById('appScreen').style.display   = 'block';
     document.getElementById('headerShopName').textContent = shopName;
     window.scrollTo(0, 0);
+    initDateSelects();
     loadSchedules();
     loadUsers();
     loadShopInfo();
@@ -648,8 +653,30 @@
     });
   }
 
+  function initDateSelects() {
+    const now = new Date();
+    const yearSel  = document.getElementById('sch_year');
+    const monthSel = document.getElementById('sch_month');
+    const daySel   = document.getElementById('sch_day');
+    yearSel.innerHTML  = '<option value="">年</option>';
+    monthSel.innerHTML = '<option value="">月</option>';
+    daySel.innerHTML   = '<option value="">日</option>';
+    for (let y = now.getFullYear(); y <= now.getFullYear() + 2; y++) {
+      yearSel.innerHTML += `<option value="${y}">${y}年</option>`;
+    }
+    for (let m = 1; m <= 12; m++) {
+      monthSel.innerHTML += `<option value="${String(m).padStart(2,'0')}">${m}月</option>`;
+    }
+    for (let d = 1; d <= 31; d++) {
+      daySel.innerHTML += `<option value="${String(d).padStart(2,'0')}">${d}日</option>`;
+    }
+  }
+
   async function addSchedule() {
-    const date     = document.getElementById('sch_date').value;
+    const y = document.getElementById('sch_year').value;
+    const m = document.getElementById('sch_month').value;
+    const d = document.getElementById('sch_day').value;
+    const date = (y && m && d) ? `${y}/${m}/${d}` : '';
     const time     = document.getElementById('sch_time').value.trim();
     const location = document.getElementById('sch_location').value.trim();
     const items    = document.getElementById('sch_items').value.trim();
@@ -665,7 +692,9 @@
 
     if (result.success) {
       showMsg('schMsg', 'success', '開催日を追加しました。');
-      document.getElementById('sch_date').value     = '';
+      document.getElementById('sch_year').value      = '';
+      document.getElementById('sch_month').value     = '';
+      document.getElementById('sch_day').value       = '';
       document.getElementById('sch_time').value     = '';
       document.getElementById('sch_location').value = '';
       document.getElementById('sch_items').value    = '';
