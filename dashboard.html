@@ -658,11 +658,11 @@
     const yearSel  = document.getElementById('sch_year');
     const monthSel = document.getElementById('sch_month');
     const daySel   = document.getElementById('sch_day');
-    yearSel.innerHTML  = '<option value="">年</option>';
+    yearSel.innerHTML  = '';
     monthSel.innerHTML = '<option value="">月</option>';
     daySel.innerHTML   = '<option value="">日</option>';
     for (let y = now.getFullYear(); y <= now.getFullYear() + 2; y++) {
-      yearSel.innerHTML += `<option value="${y}">${y}年</option>`;
+      yearSel.innerHTML += `<option value="${y}" ${y === now.getFullYear() ? 'selected' : ''}>${y}年</option>`;
     }
     for (let m = 1; m <= 12; m++) {
       monthSel.innerHTML += `<option value="${String(m).padStart(2,'0')}">${m}月</option>`;
