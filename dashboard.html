@@ -492,6 +492,7 @@
 
   // セッション復元
   window.addEventListener('load', () => {
+    window.scrollTo(0, 0);
     const savedId   = sessionStorage.getItem('shopId');
     const savedName = sessionStorage.getItem('shopName');
     if (savedId && savedName) {
