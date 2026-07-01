@@ -288,8 +288,18 @@
           </div>
         </div>
         <div class="form-group">
-          <label>時間</label>
-          <input type="text" id="sch_time" placeholder="例：11:00〜13:00">
+          <label>開始時間</label>
+          <div style="display:flex; gap:8px;">
+            <select id="sch_start_hour" style="flex:1;"></select>
+            <select id="sch_start_min" style="flex:1;"></select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>終了時間</label>
+          <div style="display:flex; gap:8px;">
+            <select id="sch_end_hour" style="flex:1;"></select>
+            <select id="sch_end_min" style="flex:1;"></select>
+          </div>
         </div>
         <div class="form-group">
           <label>場所</label>
@@ -670,6 +680,18 @@
     for (let d = 1; d <= 31; d++) {
       daySel.innerHTML += `<option value="${String(d).padStart(2,'0')}">${d}日</option>`;
     }
+
+    const startHour = document.getElementById('sch_start_hour');
+    const startMin  = document.getElementById('sch_start_min');
+    const endHour   = document.getElementById('sch_end_hour');
+    const endMin    = document.getElementById('sch_end_min');
+    [startHour, endHour].forEach(sel => {
+      sel.innerHTML = '<option value="">時</option>';
+      for (let h = 6; h <= 21; h++) sel.innerHTML += `<option value="${String(h).padStart(2,'0')}">${h}時</option>`;
+    });
+    [startMin, endMin].forEach(sel => {
+      sel.innerHTML = '<option value="00">00分</option><option value="30">30分</option>';
+    });
   }
 
   async function addSchedule() {
@@ -677,7 +699,11 @@
     const m = document.getElementById('sch_month').value;
     const d = document.getElementById('sch_day').value;
     const date = (y && m && d) ? `${y}/${m}/${d}` : '';
-    const time     = document.getElementById('sch_time').value.trim();
+    const sh = document.getElementById('sch_start_hour').value;
+    const sm = document.getElementById('sch_start_min').value;
+    const eh = document.getElementById('sch_end_hour').value;
+    const em = document.getElementById('sch_end_min').value;
+    const time = (sh && eh) ? `${sh}:${sm}〜${eh}:${em}` : '';
     const location = document.getElementById('sch_location').value.trim();
     const items    = document.getElementById('sch_items').value.trim();
 
@@ -692,10 +718,13 @@
 
     if (result.success) {
       showMsg('schMsg', 'success', '開催日を追加しました。');
-      document.getElementById('sch_year').value      = '';
-      document.getElementById('sch_month').value     = '';
-      document.getElementById('sch_day').value       = '';
-      document.getElementById('sch_time').value     = '';
+      document.getElementById('sch_year').value       = String(new Date().getFullYear());
+      document.getElementById('sch_month').value      = '';
+      document.getElementById('sch_day').value        = '';
+      document.getElementById('sch_start_hour').value = '';
+      document.getElementById('sch_start_min').value  = '00';
+      document.getElementById('sch_end_hour').value   = '';
+      document.getElementById('sch_end_min').value    = '00';
       document.getElementById('sch_location').value = '';
       document.getElementById('sch_items').value    = '';
       loadSchedules();
