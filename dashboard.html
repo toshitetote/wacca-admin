@@ -299,7 +299,7 @@
         <div class="table-wrap">
           <table id="scheduleTable">
             <thead>
-              <tr><th>開催日</th><th>時間</th><th>場所</th><th>持ち物</th><th>状態</th><th>操作</th></tr>
+              <tr><th>開催日</th><th>時間</th><th>場所</th><th>持ち物</th><th>状態</th></tr>
             </thead>
             <tbody id="scheduleTbody">
               <tr><td colspan="6" class="empty">読み込み中...</td></tr>
@@ -566,7 +566,7 @@
     select.innerHTML = '<option value="">選択してください</option>';
 
     if (schedules.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="6" class="empty">開催日が登録されていません</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="5" class="empty">開催日が登録されていません</td></tr>';
       return;
     }
 
@@ -576,11 +576,10 @@
         <td>${s.time}</td>
         <td>${s.location}</td>
         <td>${s.items}</td>
-        <td><span class="badge ${s.status === '開催' ? 'badge-open' : 'badge-cancel'}">${s.status}</span></td>
         <td>
           ${s.status === '開催'
-            ? `<button class="btn btn-outline" style="padding:4px 10px;font-size:12px;" onclick="changeStatus('${s.date}','中止')">中止にする</button>`
-            : `<button class="btn" style="padding:4px 10px;font-size:12px;" onclick="changeStatus('${s.date}','開催')">再開する</button>`
+            ? `<button class="badge badge-open" style="border:none;cursor:pointer;font-size:12px;padding:4px 10px;border-radius:12px;" onclick="changeStatus('${s.date}','中止')">開催</button>`
+            : `<button class="badge badge-cancel" style="border:none;cursor:pointer;font-size:12px;padding:4px 10px;border-radius:12px;" onclick="changeStatus('${s.date}','開催')">中止</button>`
           }
         </td>
       </tr>
