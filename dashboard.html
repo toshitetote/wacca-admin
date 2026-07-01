@@ -403,6 +403,7 @@
         </div>
         <div class="form-group">
           <label>本文</label>
+          <button class="btn" style="background:#fff; color:#E07048; border:1.5px solid #E07048; font-size:14px; padding:8px 14px; margin-bottom:8px;" onclick="insertScheduleInfo()">📅 開催情報を挿入</button>
           <textarea id="mail_body" rows="8" placeholder="メール本文を入力してください"></textarea>
         </div>
         <button class="btn btn-full" onclick="sendBroadcast()">一斉送信する</button>
@@ -810,6 +811,23 @@
   // ============================================================
   //  メール一斉配信
   // ============================================================
+
+  function insertScheduleInfo() {
+    const textarea = document.getElementById('mail_body');
+    const upcoming = schedules.filter(s => s.status === '開催');
+    if (upcoming.length === 0) {
+      alert('開催予定の日程がありません。先に開催日程を登録してください。');
+      return;
+    }
+    const lines = upcoming.map(s => `・${s.date}　${s.time}　${s.location}`).join('\n');
+    const insert = `【開催日程のご案内】\n${lines}\n`;
+    const pos = textarea.selectionStart;
+    const before = textarea.value.substring(0, pos);
+    const after  = textarea.value.substring(pos);
+    textarea.value = before + insert + after;
+    textarea.focus();
+    textarea.selectionStart = textarea.selectionEnd = pos + insert.length;
+  }
 
   async function sendBroadcast() {
     const subject = document.getElementById('mail_subject').value.trim();
