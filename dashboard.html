@@ -621,9 +621,16 @@
     document.getElementById('panel-' + name).classList.add('active');
     if (name === 'receipt') loadReceipts();
     if (name === 'settings') loadShopInfo();
-    if (name === 'qr') {
-      const el = document.getElementById('flyerShopName');
-      if (el && !el.value) el.value = shopName;
+    if (name === 'qr') loadFlyerInfo();
+  }
+
+  async function loadFlyerInfo() {
+    const nameEl = document.getElementById('flyerShopName');
+    if (nameEl && !nameEl.value) nameEl.value = shopName;
+    const res    = await fetch(`${GAS_URL}?action=getShopInfo&shopId=${shopId}`);
+    const result = await res.json();
+    if (result.success && result.lineUrl) {
+      document.getElementById('lineUrl').value = result.lineUrl;
     }
   }
 
