@@ -154,7 +154,7 @@
 <h2>0. WaCCAの基本方針</h2>
 
 <div class="notice">
-  💡 <strong>食堂側は何もしなくていい</strong>がWaCCAのコンセプトです。<br>
+  💡<strong>食堂側は何もしなくていい</strong>がWaCCAのコンセプトです。<br>
   申し込みフォームを送ってもらうだけで、LINE公式アカウントの開設・設定・リッチメニュー構築まで全てWaCCA側で行い、「はい、使えます」という状態で渡します。<br>
   食堂側がやることは<strong>フォームの申し込み</strong>と<strong>開催日の登録</strong>だけです。
 </div>
@@ -165,25 +165,44 @@
 <hr>
 
 <!-- ============================================================ -->
-<h2>1. 先方に確認すべき事項</h2>
+<h2>1. 申し込み受付〜先方連絡のタイミング</h2>
 
-<p>セットアップ開始前に以下の情報を食堂側から収集してください。（基本はGoogleフォームで自動取得）</p>
+<div class="step"><span class="step-num">タイミング①</span><p>Googleフォームで申し込みが届く → A〜F・I・J・O・Pが食堂マスタに自動登録され、ウェルカムメールが自動送信される（食堂ID・パスワード・マイページURL・無料期間終了日を通知）</p></div>
+<div class="step"><span class="step-num">タイミング②</span><p>ウェルカムメールには「LINE公式アカウントの開設・設定はWaCCA運営側で行う」旨と、既存アカウントがある場合は返信するよう案内済み。<strong>3営業日以内に返信がなければ新規開設として進めてよい</strong></p></div>
+<div class="step"><span class="step-num">タイミング③</span><p>既存アカウントありの返信が来た場合 → 管理者権限の招待方法を案内し、招待完了の連絡を待ってから2章の作業に着手する</p></div>
+<div class="step"><span class="step-num">タイミング④</span><p>LINE側の設定（2〜4章）がすべて完了したら、先方に完了報告メールを送る（テンプレは本章末尾）</p></div>
 
+<p>フォームで自動取得される項目：</p>
 <table>
   <thead>
     <tr><th>確認項目</th><th>内容・備考</th></tr>
   </thead>
   <tbody>
-    <tr><td>食堂名</td><td>正式名称。チラシ・LINE・システムに表示される</td></tr>
+    <tr><td>食堂名</td><td>正式名称。チラシ・LINE公式アカウント名・システムにそのまま使われる。<strong>フォームの入力欄に「LINE公式アカウント名になります」の注意書きを入れておく</strong></td></tr>
     <tr><td>責任者名</td><td>運営責任者のフルネーム</td></tr>
     <tr><td>メールアドレス</td><td>WaCCAからの通知・請求書送付先</td></tr>
     <tr><td>電話番号</td><td>緊急連絡先</td></tr>
     <tr><td>住所</td><td>食堂の所在地</td></tr>
     <tr><td>大人の利用料金</td><td>0円（無料）の場合もあり</td></tr>
     <tr><td>こどもの利用料金</td><td>0円（無料）の場合もあり</td></tr>
-    <tr><td>既存LINE公式アカウント</td><td>ヒアリング時に口頭で確認。既存OAがある場合は移行対応（WaCCA側で代行）</td></tr>
   </tbody>
 </table>
+
+<p>フォームでは取得できず、返信メールや電話で別途確認する項目：</p>
+<table>
+  <thead>
+    <tr><th>確認項目</th><th>いつ・どう確認するか</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>既存LINE公式アカウントの有無</td><td>ウェルカムメール送信後、返信の有無で判断。返信があれば移行、なければ新規開設</td></tr>
+    <tr><td>開催日・場所・持ち物などの初回スケジュール</td><td>LINE設定完了報告のタイミングで、開催日程タブへの入力を依頼する</td></tr>
+  </tbody>
+</table>
+
+<div class="notice">
+  💡 完了報告メールのテンプレート例：<br>
+  「LINE公式アカウントの設定が完了しました。マイページから開催日を登録いただくとご利用いただけます。ご不明点があれば問い合わせタブまたは本メールへご返信ください。」
+</div>
 
 <hr>
 
@@ -222,13 +241,19 @@
 
 <p><strong>② Webhookを有効にする</strong></p>
 <div class="step"><span class="step-num">設定箇所</span><p>LINE Developersコンソール → チャネル →「Messaging API設定」→「Webhook設定」→「Webhookの利用」をON</p></div>
-<div class="step"><span class="step-num">Webhook URL</span><p>以下を設定（shopIdは食堂ごとに異なる）：</p></div>
-<div class="code">https://script.google.com/macros/s/AKfycbxtQ2LWE8vJqbHUZq8tmN13fkXNytvgfdioUzN4NqkpRQkv11sIiajQvv4KfDAp6J4iZA/exec?shopId=【食堂ID】</div>
+<div class="step"><span class="step-num">Webhook URL</span><p>全食堂共通の1本のURLを設定します（食堂ごとに変える必要はありません）：</p></div>
+<div class="code">https://script.google.com/macros/s/AKfycbxtQ2LWE8vJqbHUZq8tmN13fkXNytvgfdioUzN4NqkpRQkv11sIiajQvv4KfDAp6J4iZA/exec</div>
+<div class="warn">
+  ⚠️ URLの末尾に <code>?shopId=…</code> のようなクエリパラメータを付けないでください。GASの仕様上、POSTリクエストにクエリパラメータが付くと302エラーになります。食堂の判別はLINEチャネル固有のBot User IDから自動で行われます（後述）。
+</div>
+<div class="notice">
+  💡 LINE Developersの「検証」ボタンを押すと302エラーが出ることがありますが、これはGASインフラの仕様で無害です。実際のメッセージ送受信（Webhook配信）には影響ありません。気にせず先に進めてください。
+</div>
 
 <p><strong>③ チャンネルアクセストークンを発行する</strong></p>
 <div class="step"><span class="step-num">設定箇所</span><p>「Messaging API設定」→「チャンネルアクセストークン（長期）」→「発行」</p></div>
 <div class="notice">
-  💡 発行したトークンは食堂マスタのG列（LINEトークン）に登録します。
+  💡 発行したトークンは食堂マスタのG列（LINEトークン）に登録します。<strong>G列に貼り付けると、友だち追加URL（R列）は自動で取得されます。</strong>手動での確認・入力は不要です。
 </div>
 
 <h3>2-3. LINEログインチャネルの設定（LIFF用）</h3>
@@ -238,7 +263,7 @@
 <div class="step"><span class="step-num">STEP 1</span><p>チャネル名：食堂名（例：○○こども食堂 予約）</p></div>
 <div class="step"><span class="step-num">STEP 2</span><p>「LINEログイン設定」→「LIFF」タブ →「追加」</p></div>
 <div class="step"><span class="step-num">STEP 3</span><p>LIFF名：食堂名、サイズ：Full、エンドポイントURLに以下を設定：</p></div>
-<div class="code">https://wacca-system.jp/liff.html?shopId=【食堂ID】</div>
+<div class="code">https://liff.wacca-system.jp/?shopId=【食堂ID】</div>
 <div class="step"><span class="step-num">STEP 4</span><p>発行されたLIFF IDを食堂マスタのH列（LIFF_ID）に登録する</p></div>
 
 <div class="warn">
@@ -277,7 +302,10 @@
 </table>
 
 <div class="notice">
-  💡 Googleフォームからの申し込みがあった場合はA〜F・I・J・O・Pは自動入力されます。G（LINEトークン）とH（LIFF ID）はLINE側の設定後に手動で入力が必要です。
+  💡 Googleフォームからの申し込みがあった場合はA〜F・I・J・O・Pは自動入力されます。運営者が手動で入力する必要があるのは<strong>G（LINEトークン）とH（LIFF ID）の2つだけ</strong>です。
+</div>
+<div class="warn">
+  ⚠️ I列・J列（料金）はセルの表示形式が「日付」になっていると入力値が日付に変換されてしまいます。入力前に表示形式を「標準」になっているか確認してください。
 </div>
 
 <hr>
@@ -304,14 +332,14 @@
 <h2>5. セットアップ完了チェックリスト</h2>
 
 <ul class="check-list">
-  <li><span class="box"></span>食堂マスタに1行登録済み（全列）</li>
+  <li><span class="box"></span>食堂マスタに1行登録済み（G・Hを手入力）</li>
   <li><span class="box"></span>LINE公式アカウントの応答メッセージをOFF・BotモードにON</li>
-  <li><span class="box"></span>WebhookのURLを設定し「検証」でOKが出た</li>
-  <li><span class="box"></span>チャンネルアクセストークンを発行し食堂マスタに記入</li>
-  <li><span class="box"></span>LIFFアプリを作成し食堂マスタに記入</li>
+  <li><span class="box"></span>WebhookのURLを設定（クエリパラメータなし）※「検証」の302エラーは無視してOK</li>
+  <li><span class="box"></span>チャンネルアクセストークンを発行し食堂マスタG列に記入</li>
+  <li><span class="box"></span>LIFFアプリを作成し食堂マスタH列に記入</li>
   <li><span class="box"></span>リッチメニューを設定</li>
-  <li><span class="box"></span>ウェルカムメールが届いていることを確認（食堂側に確認）</li>
   <li><span class="box"></span>テスト予約を1件入れて動作確認</li>
+  <li><span class="box"></span>先方に完了報告メールを送付</li>
   <li><span class="box"></span>ダッシュボードにログインできることを確認（食堂側に確認）</li>
 </ul>
 
@@ -327,9 +355,13 @@
   <tbody>
     <tr><td>ボタンを押すと「個別のやりとりはできません」と出る</td><td>応答モードがBotになっていない → 応答設定を確認</td></tr>
     <tr><td>LIFFが開かない</td><td>LIFF IDが食堂マスタと不一致 → H列を確認</td></tr>
-    <tr><td>予約しても反応がない</td><td>WebhookのURLが間違っている、またはshopIdが違う → G列・Webhook URLを確認</td></tr>
-    <tr><td>メッセージが送信されない</td><td>LINEトークンが失効または未設定 → Messaging APIで再発行</td></tr>
+    <tr><td>Webhook検証で302エラーが出る</td><td>GASインフラの仕様による既知の挙動。実際の配信には影響しないので無視してよい</td></tr>
+    <tr><td>予約・メッセージに反応がない</td><td>①G列のトークンが正しいか　②Q列（Bot UserID）が空のまま→一度メッセージを送って自動紐付けさせる　③GASが最新デプロイか確認</td></tr>
+    <tr><td>メッセージが送信されない</td><td>LINEトークンが失効または未設定 → Messaging APIで再発行しG列を更新</td></tr>
     <tr><td>ダッシュボードにログインできない</td><td>食堂IDまたはパスワードが違う → P列のパスワードを確認</td></tr>
+    <tr><td>チラシのLINE URLが空欄</td><td>R列が未入力 → G列にトークンが入っているか確認（入っていれば自動取得されるはず）</td></tr>
+    <tr><td>料金が日付のような値になる</td><td>I・J列の表示形式が「日付」になっている → 「標準」に変更して再入力</td></tr>
+    <tr><td>コード修正が反映されない</td><td>①GASを<code>clasp push</code>後に必ず「デプロイを管理」で新しいバージョンとしてデプロイする　②admin.html/dashboard.html/setup-manual.htmlのGAS_URLが最新デプロイのURLと一致しているか確認</td></tr>
   </tbody>
 </table>
 
