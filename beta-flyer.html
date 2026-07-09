@@ -42,6 +42,16 @@
     letter-spacing: 2px;
     margin-bottom: 6px;
   }
+  .hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 4px;
+  }
+  .hero-text { flex: 1; }
+  .hero-illust { width: 128px; height: 128px; flex-shrink: 0; }
+
   h1 {
     font-size: 40px;
     color: #E07048;
@@ -49,6 +59,12 @@
     margin-bottom: 8px;
   }
   h1 .small { font-size: 22px; color: #333; display: block; margin-top: 4px; }
+  .acronym {
+    font-size: 12px;
+    color: #999;
+    letter-spacing: 0.4px;
+  }
+  .acronym b { color: #E07048; }
   .lead {
     font-size: 15px;
     color: #555;
@@ -145,8 +161,34 @@
 <div class="flyer">
   <div class="badge">β版 参加費無料</div>
 
-  <div class="kicker">こども食堂向け予約・LINE連携システム</div>
-  <h1>🍚 WaCCA<br><span class="small">わっか</span></h1>
+  <div class="hero">
+    <div class="hero-text">
+      <div class="kicker">こども食堂向け予約・LINE連携システム</div>
+      <h1>🍚 WaCCA<br><span class="small">わっか</span></h1>
+      <div class="acronym">
+        <b>W</b>elfare <b>A</b>ssistance for <b>C</b>ommunity <b>C</b>hildren's <b>A</b>ctivities
+      </div>
+    </div>
+    <svg class="hero-illust" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="100" cy="100" r="94" fill="#FFF4EF"/>
+      <circle cx="100" cy="100" r="94" fill="none" stroke="#F5CBBA" stroke-width="4" stroke-dasharray="4 6"/>
+      <!-- 大人（左） -->
+      <circle cx="62" cy="88" r="20" fill="#E07048"/>
+      <path d="M32 158c2-26 20-40 30-40s28 14 30 40" fill="#E07048"/>
+      <!-- こども（右） -->
+      <circle cx="132" cy="100" r="15" fill="#F2A57A"/>
+      <path d="M110 158c1-20 15-32 22-32s21 12 22 32" fill="#F2A57A"/>
+      <!-- 手をつなぐ -->
+      <circle cx="98" cy="132" r="6" fill="#E07048"/>
+      <!-- お茶碗 -->
+      <ellipse cx="100" cy="178" rx="26" ry="7" fill="#C9C9C9" opacity="0.5"/>
+      <path d="M78 168c0 10 10 16 22 16s22-6 22-16z" fill="#fff" stroke="#E07048" stroke-width="3"/>
+      <ellipse cx="100" cy="168" rx="22" ry="6" fill="#fff" stroke="#E07048" stroke-width="3"/>
+      <circle cx="93" cy="166" r="2.4" fill="#E07048"/>
+      <circle cx="100" cy="164" r="2.4" fill="#E07048"/>
+      <circle cx="107" cy="166" r="2.4" fill="#E07048"/>
+    </svg>
+  </div>
 
   <p class="lead">
     LINEひとつで、予約管理・開催案内・利用者とのやりとりがまとまる、こども食堂のための予約システムです。<br>
