@@ -25,7 +25,7 @@
   }
   .qr-overlay {
     position: absolute;
-    left: 76.5%;
+    left: 80%;
     top: 84.5%;
     width: 9.7%;
     aspect-ratio: 1 / 1;
@@ -52,8 +52,8 @@
   @media print {
     body { background: #fff; }
     .no-print { display: none; }
-    .wrap { max-width: none; margin: 0; }
-    .flyer-img { box-shadow: none; width: 210mm; height: 297mm; object-fit: contain; }
+    .wrap { max-width: none; width: fit-content; margin: 0 auto; }
+    .flyer-img { box-shadow: none; width: auto; height: 297mm; }
     @page { size: A4; margin: 0; }
   }
 </style>
