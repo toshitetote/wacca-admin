@@ -7,132 +7,37 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    font-family: -apple-system, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', sans-serif;
+    font-family: -apple-system, 'Hiragino Sans', sans-serif;
     background: #FFF4EF;
-    color: #333;
   }
-  .flyer {
-    width: 210mm;
-    height: 297mm;
+  .wrap {
+    max-width: 720px;
     margin: 20px auto;
-    background: #fff;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    padding: 20mm 16mm;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow: hidden;
-  }
-  .badge {
-    position: absolute;
-    top: 14mm;
-    right: -14mm;
-    background: #E07048;
-    color: #fff;
-    font-size: 15px;
-    font-weight: bold;
-    padding: 8px 46px;
-    transform: rotate(35deg);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  }
-  .kicker {
-    color: #E07048;
-    font-size: 16px;
-    font-weight: bold;
-    letter-spacing: 2px;
-    margin-bottom: 6px;
-  }
-  .hero {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    margin-bottom: 4px;
-  }
-  .hero-text { flex: 1; }
-  .hero-illust { width: 128px; height: 128px; flex-shrink: 0; }
-
-  h1 {
-    font-size: 40px;
-    color: #E07048;
-    line-height: 1.3;
-    margin-bottom: 8px;
-  }
-  h1 .small { font-size: 22px; color: #333; display: block; margin-top: 4px; }
-  .acronym {
-    font-size: 12px;
-    color: #999;
-    letter-spacing: 0.4px;
-  }
-  .acronym b { color: #E07048; }
-  .lead {
-    font-size: 15px;
-    color: #555;
-    margin-bottom: 24px;
-    line-height: 1.9;
-  }
-  .features {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 26px;
-  }
-  .feature {
-    background: #FFF4EF;
-    border-radius: 12px;
-    padding: 14px 16px;
-    border: 1px solid #F5CBBA;
-  }
-  .feature .icon { font-size: 22px; margin-bottom: 4px; }
-  .feature .title { font-size: 14px; font-weight: bold; color: #E07048; margin-bottom: 2px; }
-  .feature .desc { font-size: 12px; color: #666; line-height: 1.6; }
-
-  .price-box {
-    background: #E07048;
-    color: #fff;
-    border-radius: 14px;
-    padding: 18px 22px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 26px;
-  }
-  .price-box .label { font-size: 14px; opacity: 0.9; }
-  .price-box .price { font-size: 30px; font-weight: bold; }
-  .price-box .price span { font-size: 14px; font-weight: normal; }
-  .price-box .free { font-size: 13px; margin-top: 4px; opacity: 0.95; }
-
-  .cta {
-    margin-top: auto;
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    background: #FFF4EF;
-    border: 2px solid #E07048;
-    border-radius: 16px;
-    padding: 20px 24px;
-  }
-  .cta .qr {
-    width: 130px;
-    height: 130px;
-    background: #fff;
-    border-radius: 10px;
-    padding: 8px;
-    flex-shrink: 0;
-  }
-  .cta .qr img { width: 100%; height: 100%; }
-  .cta .text { flex: 1; }
-  .cta .text .cta-title { font-size: 19px; font-weight: bold; color: #E07048; margin-bottom: 6px; }
-  .cta .text .cta-desc { font-size: 13px; color: #555; line-height: 1.7; }
-
-  .footer {
-    margin-top: 16px;
     text-align: center;
-    font-size: 11px;
-    color: #999;
+    position: relative;
   }
-
-  .no-print { position: fixed; top: 16px; right: 16px; z-index: 10; }
+  .flyer-img {
+    width: 100%;
+    height: auto;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    border-radius: 4px;
+    display: block;
+  }
+  .qr-overlay {
+    position: absolute;
+    left: 76.5%;
+    top: 84.5%;
+    width: 9.7%;
+    aspect-ratio: 1 / 1;
+  }
+  .qr-overlay img {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .no-print {
+    margin-top: 16px;
+  }
   .print-btn {
     background: #E07048;
     color: #fff;
@@ -144,104 +49,24 @@
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   }
-
   @media print {
     body { background: #fff; }
     .no-print { display: none; }
-    .flyer { box-shadow: none; margin: 0; }
+    .wrap { max-width: none; margin: 0; }
+    .flyer-img { box-shadow: none; width: 210mm; height: 297mm; object-fit: contain; }
+    @page { size: A4; margin: 0; }
   }
 </style>
 </head>
 <body>
 
-<div class="no-print">
-  <button class="print-btn" onclick="window.print()">🖨️ 印刷・PDF保存</button>
-</div>
-
-<div class="flyer">
-  <div class="badge">β版 参加費無料</div>
-
-  <div class="hero">
-    <div class="hero-text">
-      <div class="kicker">こども食堂向け予約・LINE連携システム</div>
-      <h1>🍚 WaCCA<br><span class="small">わっか</span></h1>
-      <div class="acronym">
-        <b>W</b>elfare <b>A</b>ssistance for <b>C</b>ommunity <b>C</b>hildren's <b>A</b>ctivities
-      </div>
-    </div>
-    <svg class="hero-illust" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="100" cy="100" r="94" fill="#FFF4EF"/>
-      <circle cx="100" cy="100" r="94" fill="none" stroke="#F5CBBA" stroke-width="4" stroke-dasharray="4 6"/>
-      <!-- 大人（左） -->
-      <circle cx="62" cy="88" r="20" fill="#E07048"/>
-      <path d="M32 158c2-26 20-40 30-40s28 14 30 40" fill="#E07048"/>
-      <!-- こども（右） -->
-      <circle cx="132" cy="100" r="15" fill="#F2A57A"/>
-      <path d="M110 158c1-20 15-32 22-32s21 12 22 32" fill="#F2A57A"/>
-      <!-- 手をつなぐ -->
-      <circle cx="98" cy="132" r="6" fill="#E07048"/>
-      <!-- お茶碗 -->
-      <ellipse cx="100" cy="178" rx="26" ry="7" fill="#C9C9C9" opacity="0.5"/>
-      <path d="M78 168c0 10 10 16 22 16s22-6 22-16z" fill="#fff" stroke="#E07048" stroke-width="3"/>
-      <ellipse cx="100" cy="168" rx="22" ry="6" fill="#fff" stroke="#E07048" stroke-width="3"/>
-      <circle cx="93" cy="166" r="2.4" fill="#E07048"/>
-      <circle cx="100" cy="164" r="2.4" fill="#E07048"/>
-      <circle cx="107" cy="166" r="2.4" fill="#E07048"/>
-    </svg>
+<div class="wrap">
+  <img class="flyer-img" src="beta-flyer.png" alt="WaCCA ベータ版参加募集チラシ">
+  <div class="qr-overlay">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=https%3A%2F%2Fdocs.google.com%2Fforms%2Fd%2F1fF7nMJwvbx-YQCOR988qqREEnwqHOoCH99fZZ7WpayA%2Fviewform" alt="申し込みQRコード">
   </div>
-
-  <p class="lead">
-    LINEひとつで、予約管理・開催案内・利用者とのやりとりがまとまる、こども食堂のための予約システムです。<br>
-    ベータ版にご参加いただく食堂は、通常有料の機能を<strong>無料期間中</strong>にお試しいただけます。専用のLINE公式アカウントの開設・設定もすべてWaCCA運営が代行します。
-  </p>
-
-  <div class="features">
-    <div class="feature">
-      <div class="icon">📅</div>
-      <div class="title">LINEで予約受付</div>
-      <div class="desc">利用者はLINEのボタン操作だけで予約・キャンセル・予約確認ができます。</div>
-    </div>
-    <div class="feature">
-      <div class="icon">🖥️</div>
-      <div class="title">かんたんマイページ</div>
-      <div class="desc">開催日登録・予約確認・利用者管理をブラウザから直感的に操作できます。</div>
-    </div>
-    <div class="feature">
-      <div class="icon">✉️</div>
-      <div class="title">自動リマインド</div>
-      <div class="desc">開催2日前に予約者へ自動でメールが届き、来場忘れを防ぎます。</div>
-    </div>
-    <div class="feature">
-      <div class="icon">🙌</div>
-      <div class="title">セットアップ不要</div>
-      <div class="desc">LINE公式アカウントの開設・設定はすべてWaCCA運営が代行します。</div>
-    </div>
-  </div>
-
-  <div class="price-box">
-    <div>
-      <div class="label">ベータ版参加特典</div>
-      <div class="price">無料期間 <span>あり</span></div>
-      <div class="free">期間終了後は月額3,300円（税込）</div>
-    </div>
-    <div style="font-size:40px;">🎁</div>
-  </div>
-
-  <div class="cta">
-    <div class="qr">
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=https%3A%2F%2Fdocs.google.com%2Fforms%2Fd%2F1fF7nMJwvbx-YQCOR988qqREEnwqHOoCH99fZZ7WpayA%2Fviewform" alt="申し込みQRコード">
-    </div>
-    <div class="text">
-      <div class="cta-title">QRコードから今すぐお申し込み</div>
-      <div class="cta-desc">
-        フォームに食堂名・連絡先などをご入力いただくだけで、お申し込み完了です。<br>
-        後日、WaCCA運営よりご案内メールをお送りします。
-      </div>
-    </div>
-  </div>
-
-  <div class="footer">
-    合同会社TETOTE　WaCCA運営事務局　wacca.system@gmail.com
+  <div class="no-print">
+    <button class="print-btn" onclick="window.print()">🖨️ 印刷・PDF保存</button>
   </div>
 </div>
 
