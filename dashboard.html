@@ -310,6 +310,10 @@
           <input type="text" id="sch_address" placeholder="例：福島県〇〇市〇〇1-2-3">
         </div>
         <div class="form-group">
+          <label>準備する食事の個数</label>
+          <input type="number" id="sch_capacity" min="1" placeholder="例：30">
+        </div>
+        <div class="form-group">
           <label>持ち物</label>
           <input type="text" id="sch_items" placeholder="例：食器、マスク">
         </div>
@@ -721,25 +725,31 @@
     const time = (sh && eh) ? `${sh}:${sm}〜${eh}:${em}` : '';
     const location = document.getElementById('sch_location').value.trim();
     const address  = document.getElementById('sch_address').value.trim();
+    const capacity = document.getElementById('sch_capacity').value.trim();
     const items    = document.getElementById('sch_items').value.trim();
 
     if (!date || !time || !location) {
       showMsg('schMsg', 'error', '開催日・時間・場所は必須です。');
       return;
     }
+    if (!capacity || Number(capacity) < 1) {
+      showMsg('schMsg', 'error', '準備する食事の個数を入力してください。');
+      return;
+    }
 
     const confirmMsg =
       `以下の内容で開催日を登録します。よろしいですか？\n\n` +
-      `開催日：${date}\n` +
-      `時間　：${time}\n` +
-      `場所　：${location}\n` +
-      (address ? `住所　：${address}\n` : '') +
-      (items ? `持ち物：${items}\n` : '');
+      `開催日　　　：${date}\n` +
+      `時間　　　　：${time}\n` +
+      `場所　　　　：${location}\n` +
+      (address ? `住所　　　　：${address}\n` : '') +
+      `準備する食事：${capacity}個\n` +
+      (items ? `持ち物　　　：${items}\n` : '');
     if (!confirm(confirmMsg)) return;
 
     const btn = document.getElementById('sch_add_btn');
     btn.disabled = true;
-    const params = new URLSearchParams({ action: 'addSchedule', shopId, date, time, location, address, items });
+    const params = new URLSearchParams({ action: 'addSchedule', shopId, date, time, location, address, capacity, items });
     const res    = await fetch(`${GAS_URL}?${params}`);
     const result = await res.json();
     btn.disabled = false;
@@ -755,6 +765,7 @@
       document.getElementById('sch_end_min').value    = '00';
       document.getElementById('sch_location').value = '';
       document.getElementById('sch_address').value  = '';
+      document.getElementById('sch_capacity').value = '';
       document.getElementById('sch_items').value    = '';
       loadSchedules();
     } else {
