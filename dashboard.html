@@ -728,6 +728,15 @@
       return;
     }
 
+    const confirmMsg =
+      `以下の内容で開催日を登録します。よろしいですか？\n\n` +
+      `開催日：${date}\n` +
+      `時間　：${time}\n` +
+      `場所　：${location}\n` +
+      (address ? `住所　：${address}\n` : '') +
+      (items ? `持ち物：${items}\n` : '');
+    if (!confirm(confirmMsg)) return;
+
     const btn = document.getElementById('sch_add_btn');
     btn.disabled = true;
     const params = new URLSearchParams({ action: 'addSchedule', shopId, date, time, location, address, items });
@@ -1093,6 +1102,18 @@
       childPrice: document.getElementById('info_childPrice').value,
     };
     if (!data.shopName) { showMsg('infoMsg', 'error', '食堂名を入力してください。'); return; }
+
+    const confirmMsg =
+      `以下の内容に更新します。よろしいですか？\n\n` +
+      `食堂名　：${data.shopName}\n` +
+      `責任者名：${data.ownerName}\n` +
+      `住所　　：${data.address}\n` +
+      `電話番号：${data.phone}\n` +
+      `メール　：${data.email}\n` +
+      `大人料金：${data.adultPrice}円\n` +
+      `こども料金：${data.childPrice}円`;
+    if (!confirm(confirmMsg)) return;
+
     const res    = await fetch(`${GAS_URL}?${new URLSearchParams(data)}`);
     const result = await res.json();
     if (result.success) {
