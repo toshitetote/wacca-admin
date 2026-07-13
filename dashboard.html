@@ -306,6 +306,10 @@
           <input type="text" id="sch_location" placeholder="例：○○公民館">
         </div>
         <div class="form-group">
+          <label>住所（任意）</label>
+          <input type="text" id="sch_address" placeholder="例：福島県〇〇市〇〇1-2-3">
+        </div>
+        <div class="form-group">
           <label>持ち物</label>
           <input type="text" id="sch_items" placeholder="例：食器、マスク">
         </div>
@@ -713,6 +717,7 @@
     const em = document.getElementById('sch_end_min').value;
     const time = (sh && eh) ? `${sh}:${sm}〜${eh}:${em}` : '';
     const location = document.getElementById('sch_location').value.trim();
+    const address  = document.getElementById('sch_address').value.trim();
     const items    = document.getElementById('sch_items').value.trim();
 
     if (!date || !time || !location) {
@@ -720,7 +725,7 @@
       return;
     }
 
-    const params = new URLSearchParams({ action: 'addSchedule', shopId, date, time, location, items });
+    const params = new URLSearchParams({ action: 'addSchedule', shopId, date, time, location, address, items });
     const res    = await fetch(`${GAS_URL}?${params}`);
     const result = await res.json();
 
@@ -734,6 +739,7 @@
       document.getElementById('sch_end_hour').value   = '';
       document.getElementById('sch_end_min').value    = '00';
       document.getElementById('sch_location').value = '';
+      document.getElementById('sch_address').value  = '';
       document.getElementById('sch_items').value    = '';
       loadSchedules();
     } else {
