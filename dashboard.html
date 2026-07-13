@@ -774,13 +774,20 @@
 
   async function deleteSchedule(date) {
     const [y, m, d] = date.split('/');
-    if (!confirm(`${y}年${m}月${d}日の開催日を削除しますか？\nこの操作は取り消せません。`)) return;
+    const dateLabel = `${y}年${m}月${d}日`;
+    if (!confirm(`${dateLabel}の開催日を削除しますか？\nこの操作は取り消せません。`)) return;
     const params = new URLSearchParams({ action: 'deleteSchedule', shopId, date });
     const res    = await fetch(`${GAS_URL}?${params}`);
     const result = await res.json();
     if (result.success) {
       showMsg('schMsg', 'success', '開催日を削除しました。');
       loadSchedules();
+      if (confirm(`${dateLabel}の予約者にキャンセルメールを送りますか？`)) {
+        const p2 = new URLSearchParams({ action: 'sendCancelEmail', shopId, date });
+        const r2 = await fetch(`${GAS_URL}?${p2}`);
+        const res2 = await r2.json();
+        showMsg('schMsg', 'success', `キャンセルメールを${res2.count}件送信しました。`);
+      }
     } else {
       showMsg('schMsg', 'error', '削除に失敗しました。');
     }
