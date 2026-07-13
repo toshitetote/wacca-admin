@@ -254,6 +254,7 @@ window.addEventListener('load', () => {
   if (params.get('message'))  document.getElementById('message').value  = params.get('message');
   updatePreview();
   if (params.get('mode') === 'smartphone') showSmartphone();
+  if (params.get('mode') === 'print') showPrint();
 });
 
 function getQRUrl(size) {

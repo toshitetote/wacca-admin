@@ -1066,7 +1066,7 @@
     const name    = document.getElementById('flyerShopName').value.trim() || shopName;
     const lineUrl = document.getElementById('lineUrl').value.trim();
     const message = document.getElementById('flyerMessage').value.trim();
-    const params  = new URLSearchParams({ shopName: name, lineUrl, message });
+    const params  = new URLSearchParams({ shopName: name, lineUrl, message, mode: 'print' });
     window.open('flyer.html?' + params.toString(), '_blank');
   }
 
