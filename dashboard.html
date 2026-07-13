@@ -326,7 +326,7 @@
         <div class="table-wrap">
           <table id="scheduleTable">
             <thead>
-              <tr><th>開催日</th><th>状態</th><th></th></tr>
+              <tr><th>開催日</th><th>状態</th><th>予定数</th><th></th></tr>
             </thead>
             <tbody id="scheduleTbody">
               <tr><td colspan="2" class="empty">読み込み中...</td></tr>
@@ -365,6 +365,10 @@
         <div class="summary-item">
           <div class="num" id="sumTotal">0</div>
           <div class="label">合計人数</div>
+        </div>
+        <div class="summary-item">
+          <div class="num" id="sumCapacity">—</div>
+          <div class="label">準備数</div>
         </div>
       </div>
 
@@ -655,7 +659,7 @@
     select.innerHTML = '<option value="">選択してください</option>';
 
     if (schedules.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="3" class="empty">開催日が登録されていません</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="4" class="empty">開催日が登録されていません</td></tr>';
       return;
     }
 
@@ -668,6 +672,7 @@
             : `<button class="badge badge-cancel" style="border:none;cursor:pointer;font-size:12px;padding:4px 10px;border-radius:12px;" onclick="changeStatus('${s.date}','開催')">中止</button>`
           }
         </td>
+        <td>${s.capacity > 0 ? s.capacity + '個' : '—'}</td>
         <td>
           <button style="border:none;cursor:pointer;font-size:12px;padding:4px 10px;border-radius:12px;background:#FFEBEE;color:#C62828;" onclick="deleteSchedule('${s.date}')">削除</button>
         </td>
@@ -825,6 +830,8 @@
     document.getElementById('sumAdult').textContent = result.totalAdult;
     document.getElementById('sumChild').textContent = result.totalChild;
     document.getElementById('sumTotal').textContent = result.total;
+    const sched = schedules.find(s => s.date === date);
+    document.getElementById('sumCapacity').textContent = (sched && sched.capacity > 0) ? sched.capacity : '—';
     document.getElementById('resvSummary').style.display = 'flex';
     document.getElementById('resvCard').style.display    = 'block';
 
