@@ -225,13 +225,25 @@
 </ul>
 
 <p><strong>新規開設する場合</strong></p>
-<div class="step"><span class="step-num">STEP 1</span><p><a href="https://www.linebiz.com/jp/entry/">https://www.linebiz.com/jp/entry/</a> からアカウントを作成</p></div>
-<div class="step"><span class="step-num">STEP 2</span><p>アカウント名を食堂名に設定（例：○○こども食堂）</p></div>
-<div class="step"><span class="step-num">STEP 3</span><p>業種：「非営利団体・ボランティア」などを選択</p></div>
+<div class="step"><span class="step-num">STEP 1</span><p>manager.line.biz にアクセスし、<strong>TETOTEの既存LINE Business ID（ログイン中のアカウント）</strong>でログインする。新しいメールアドレスで登録しないこと（別のBusiness IDになり管理が分散する）</p></div>
+<div class="step"><span class="step-num">STEP 2</span><p>「アカウント作成」→ メールアドレスはTETOTEの既存アドレス、会社名は「合同会社TETOTE」を入力</p></div>
+<div class="step"><span class="step-num">STEP 3</span><p>アカウント名を食堂名に設定（例：○○こども食堂）</p></div>
+<div class="step"><span class="step-num">STEP 4</span><p>業種は近いカテゴリ（「団体」など）を選択</p></div>
+<div class="step"><span class="step-num">STEP 5</span><p>運用目的：「来店してもらいたい、リピーターになってもらいたい」「お問い合わせに対応したい、お客さんとチャットしたい」を選択。主な使い方：「上記以外の使い方」または「メッセージ配信用」</p></div>
+<div class="step"><span class="step-num">STEP 6</span><p>ビジネスマネージャーの組織：既存のTETOTE組織を選択（新規作成しない）</p></div>
+<div class="warn">
+  ⚠️ TETOTE名義の組織が複数表示されることがあるが、どちらを選んでも機能面（Messaging API・LIFF・Webhookの動作）には影響しない。判別できない場合はどちらか一方を選んで先に進めてよい。
+</div>
 
 <h3>2-2. Messaging APIチャネルの設定</h3>
 
-<p>LINE Developersコンソール（<a href="https://developers.line.biz">developers.line.biz</a>）→ WaCCAプロバイダー → 「新規チャネル作成」→「Messaging API」</p>
+<div class="step"><span class="step-num">設定箇所</span><p>作成したアカウントの管理画面（manager.line.biz）→ 右上または左下の「設定」（歯車アイコン）→「Messaging API」タブ →「利用する」</p></div>
+<div class="step"><span class="step-num">プロバイダー選択</span><p>プロバイダー名の入力欄に「WaCCA」と入力し、既存のWaCCAプロバイダーを選択する（新規作成しない）</p></div>
+<div class="step"><span class="step-num">プライバシーポリシー・利用規約</span><p>（任意項目だが登録推奨）<br>
+プライバシーポリシー：<span class="code" style="display:inline; padding:2px 6px;">https://wacca-system.jp/privacy.html</span><br>
+利用規約：<span class="code" style="display:inline; padding:2px 6px;">https://wacca-system.jp/terms.html</span></p></div>
+<div class="notice">
+  💡 これでLINE Developersコンソール側にもMessaging APIチャネルが自動的に作成され、WaCCAプロバイダー配下に追加される。</div>
 
 <p><strong>① 応答メッセージをOFFにする</strong></p>
 <div class="step"><span class="step-num">設定箇所</span><p>LINE Official Account Manager →「設定」→「応答設定」→「応答モード」を「Bot」に変更<br>「あいさつメッセージ」「応答メッセージ」をすべてOFF</p></div>
