@@ -268,18 +268,21 @@
   💡 発行したトークンは食堂マスタのG列（LINEトークン）に登録します。<strong>G列に貼り付けると、友だち追加URL（R列）は自動で取得されます。</strong>手動での確認・入力は不要です。
 </div>
 
-<h3>2-3. LINEログインチャネルの設定（LIFF用）</h3>
+<h3>2-3. LIFFアプリの追加（LINEログインチャネル）</h3>
 
-<p>LINE Developersコンソール → WaCCAプロバイダー → 「新規チャネル作成」→「LINEログイン」</p>
+<div class="notice">
+  💡 食堂ごとに新しいログインチャネルを作る必要はない。既存の<strong>「WaCCA LIFF」</strong>チャネル（全食堂共通）の中に、食堂ごとのLIFFアプリを追加登録していく。
+</div>
 
-<div class="step"><span class="step-num">STEP 1</span><p>チャネル名：食堂名（例：○○こども食堂 予約）</p></div>
-<div class="step"><span class="step-num">STEP 2</span><p>「LINEログイン設定」→「LIFF」タブ →「追加」</p></div>
-<div class="step"><span class="step-num">STEP 3</span><p>LIFF名：食堂名、サイズ：Full、エンドポイントURLに以下を設定：</p></div>
+<p>LINE Developersコンソール → WaCCAプロバイダー → <strong>「WaCCA LIFF」</strong>チャネルを開く</p>
+
+<div class="step"><span class="step-num">STEP 1</span><p>「LINEログイン設定」→「LIFF」タブ →「追加」</p></div>
+<div class="step"><span class="step-num">STEP 2</span><p>LIFF名：食堂名、サイズ：Full、エンドポイントURLに以下を設定：</p></div>
 <div class="code">https://liff.wacca-system.jp/?shopId=【食堂ID】</div>
-<div class="step"><span class="step-num">STEP 4</span><p>発行されたLIFF IDを食堂マスタのH列（LIFF_ID）に登録する</p></div>
+<div class="step"><span class="step-num">STEP 3</span><p>発行されたLIFF IDを食堂マスタのH列（LIFF_ID）に登録する</p></div>
 
 <div class="warn">
-  ⚠️ LINEログインチャネルとMessaging APIチャネルは別物です。LIFF IDはログインチャネル側で発行されます。間違えないよう注意してください。
+  ⚠️ LINEログインチャネルとMessaging APIチャネルは別物。ただしLIFFアプリの追加は既存の「WaCCA LIFF」チャネル1つに集約してよい（食堂ごとに専用のログインチャネルを作らない）。
 </div>
 
 <hr>
