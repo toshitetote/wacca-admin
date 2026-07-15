@@ -361,10 +361,25 @@ function renderShops(data) {
         <td><a href="mailto:${s.email}" style="color:#E07048">${s.email}</a></td>
         <td>${s.freeEnd}</td>
         <td><span class="badge ${badgeClass}">${s.status}</span></td>
-        <td>${btnHtml}</td>
+        <td>
+          ${btnHtml}
+          <button class="btn btn-sm" style="background:#E07048; color:#fff;" onclick="sendLineSetupEmail('${s.shopId}','${s.shopName}',this)">LINE設定完了メール</button>
+        </td>
       </tr>
     `;
   }).join('');
+}
+
+async function sendLineSetupEmail(shopId, shopName, btn) {
+  if (!confirm(`${shopName} 様へ「LINE公式アカウントの設定が完了しました」メールを送信しますか？`)) return;
+  btn.disabled = true;
+  const result = await gas({ action: 'sendLineSetupCompleteEmail', shopId });
+  if (result.success) {
+    alert('送信しました。');
+  } else {
+    alert(result.message || '送信に失敗しました。');
+  }
+  btn.disabled = false;
 }
 
 async function toggleStatus(shopId, status, btn) {
