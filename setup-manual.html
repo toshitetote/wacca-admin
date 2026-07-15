@@ -246,9 +246,14 @@
   💡 これでLINE Developersコンソール側にもMessaging APIチャネルが自動的に作成され、WaCCAプロバイダー配下に追加される。</div>
 
 <p><strong>① 応答メッセージをOFFにする</strong></p>
-<div class="step"><span class="step-num">設定箇所</span><p>LINE Official Account Manager →「設定」→「応答設定」→「応答モード」を「Bot」に変更<br>「あいさつメッセージ」「応答メッセージ」をすべてOFF</p></div>
+<div class="step"><span class="step-num">設定箇所</span><p>LINE Official Account Manager →「設定」→「応答設定」を開き、以下をすべてOFFにする：</p></div>
+<ul>
+  <li><strong>チャット</strong>：オフ</li>
+  <li><strong>あいさつメッセージ</strong>：オフ</li>
+  <li><strong>応答メッセージ</strong>：オフ</li>
+</ul>
 <div class="notice">
-  💡 OFFにしないと、利用者がボタンを押したときに「個別のやりとりはできません」などのメッセージが自動送信されてしまいます。
+  💡 OFFにしないと、利用者がボタンを押したときに「個別のやりとりはできません」などのメッセージが自動送信されてしまいます。GAS側（handleFollow）で独自のウェルカムメッセージを送っているため、あいさつメッセージがONのままだと二重に届きます。
 </div>
 
 <p><strong>② Webhookを有効にする</strong></p>
@@ -348,7 +353,7 @@
 
 <ul class="check-list">
   <li><span class="box"></span>食堂マスタに1行登録済み（G・Hを手入力）</li>
-  <li><span class="box"></span>LINE公式アカウントの応答メッセージをOFF・BotモードにON</li>
+  <li><span class="box"></span>応答設定でチャット・あいさつメッセージ・応答メッセージをすべてOFF</li>
   <li><span class="box"></span>WebhookのURLを設定（クエリパラメータなし）※「検証」の302エラーは無視してOK</li>
   <li><span class="box"></span>チャンネルアクセストークンを発行し食堂マスタG列に記入</li>
   <li><span class="box"></span>LIFFアプリを作成し食堂マスタH列に記入</li>
