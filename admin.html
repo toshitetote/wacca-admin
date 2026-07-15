@@ -353,6 +353,10 @@ function renderShops(data) {
     const btnHtml = s.status === '停止'
       ? `<button class="btn btn-restart btn-sm" onclick="toggleStatus('${s.shopId}','有効',this)">再開</button>`
       : `<button class="btn btn-stop btn-sm" onclick="toggleStatus('${s.shopId}','停止',this)">停止</button>`;
+    const lineEmailLabel = s.lineSetupEmailSentAt ? '再送信' : 'LINE設定完了メール';
+    const lineEmailNote  = s.lineSetupEmailSentAt
+      ? `<div style="font-size:11px; color:#888; margin-top:2px;">送信済み：${s.lineSetupEmailSentAt}</div>`
+      : '';
     return `
       <tr>
         <td>${s.shopId}</td>
@@ -363,7 +367,8 @@ function renderShops(data) {
         <td><span class="badge ${badgeClass}">${s.status}</span></td>
         <td>
           ${btnHtml}
-          <button class="btn btn-sm" style="background:#E07048; color:#fff;" onclick="sendLineSetupEmail('${s.shopId}','${s.shopName}',this)">LINE設定完了メール</button>
+          <button class="btn btn-sm" style="background:#E07048; color:#fff;" onclick="sendLineSetupEmail('${s.shopId}','${s.shopName}',this)">${lineEmailLabel}</button>
+          ${lineEmailNote}
         </td>
       </tr>
     `;
