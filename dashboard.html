@@ -871,7 +871,7 @@
         <td>${u.email ? '✅' : '—'}</td>
         <td>${u.reservationCount}回</td>
         <td>${u.lastReservedDate || '—'}</td>
-        <td>${u.usedLastMonth ? '✅' : '—'}</td>
+        <td>${u.usedLastTime === null ? '—' : (u.usedLastTime ? '✅' : '—')}</td>
       </tr>
     `).join('');
   }
