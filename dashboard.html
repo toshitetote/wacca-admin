@@ -395,7 +395,7 @@
         <div class="table-wrap">
           <table>
             <thead>
-              <tr><th>氏名</th><th>メールアドレスの登録</th></tr>
+              <tr><th>氏名</th><th>メールアドレスの登録</th><th>予約回数</th><th>直近の予約日</th><th>先月の利用</th></tr>
             </thead>
             <tbody id="usersTbody">
               <tr><td colspan="2" class="empty">読み込み中...</td></tr>
@@ -861,7 +861,7 @@
     const tbody = document.getElementById('usersTbody');
 
     if (users.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="2" class="empty">登録利用者はいません</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="5" class="empty">登録利用者はいません</td></tr>';
       return;
     }
 
@@ -869,6 +869,9 @@
       <tr>
         <td>${u.name}</td>
         <td>${u.email ? '✅' : '—'}</td>
+        <td>${u.reservationCount}回</td>
+        <td>${u.lastReservedDate || '—'}</td>
+        <td>${u.usedLastMonth ? '✅' : '—'}</td>
       </tr>
     `).join('');
   }
