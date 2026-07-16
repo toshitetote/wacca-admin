@@ -434,8 +434,12 @@
         </div>
         <div class="form-group">
           <label>LINE 友だち追加URL</label>
-          <input type="text" id="lineUrl" placeholder="https://line.me/R/ti/p/@xxxxxxxx">
+          <div style="display:flex; gap:8px;">
+            <input type="text" id="lineUrl" placeholder="https://line.me/R/ti/p/@xxxxxxxx" style="flex:1;">
+            <button type="button" class="btn" style="background:#fff; color:#E07048; border:1.5px solid #E07048; white-space:nowrap; padding:8px 14px;" onclick="copyLineUrl()">📋 コピー</button>
+          </div>
           <p style="font-size:11px; color:#999; margin-top:4px;">LINEアプリ → 公式アカウント管理 → アカウント情報 → 友だち追加URLで確認できます</p>
+          <div id="flyerMsg" class="msg"></div>
         </div>
         <div class="form-group">
           <label>案内メッセージ（任意）</label>
@@ -634,6 +638,17 @@
     if (name === 'receipt') loadReceipts();
     if (name === 'settings') loadShopInfo();
     if (name === 'qr') loadFlyerInfo();
+  }
+
+  function copyLineUrl() {
+    const input = document.getElementById('lineUrl');
+    if (!input.value.trim()) return;
+    navigator.clipboard.writeText(input.value.trim()).then(() => {
+      showMsg('flyerMsg', 'success', 'URLをコピーしました。');
+    }).catch(() => {
+      input.select();
+      document.execCommand('copy');
+    });
   }
 
   async function loadFlyerInfo() {
