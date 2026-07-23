@@ -244,7 +244,7 @@
         <input type="email" id="resetEmail" placeholder="登録時のメールアドレス">
       </div>
       <div id="resetMsg" class="msg"></div>
-      <button class="btn btn-full" onclick="resetPassword()">新しいパスワードを送信</button>
+      <button class="btn btn-full" id="resetPasswordBtn" onclick="resetPassword()">新しいパスワードを送信</button>
       <p style="text-align:center; margin-top:10px; font-size:13px;">
         <a href="#" onclick="hideResetForm()" style="color:#999;">ログインに戻る</a>
       </p>
@@ -348,7 +348,7 @@
             </select>
           </div>
           <div style="margin-bottom:14px;">
-            <button class="btn" onclick="loadReservations()">表示</button>
+            <button class="btn" id="loadReservationsBtn" onclick="loadReservations()">表示</button>
           </div>
         </div>
       </div>
@@ -421,7 +421,7 @@
           <button class="btn" style="background:#fff; color:#E07048; border:1.5px solid #E07048; font-size:14px; padding:8px 14px; margin-bottom:8px;" onclick="insertScheduleInfo()">📅 開催情報を挿入</button>
           <textarea id="mail_body" rows="8" placeholder="メール本文を入力してください"></textarea>
         </div>
-        <button class="btn btn-full" onclick="sendBroadcast()">一斉送信する</button>
+        <button class="btn btn-full" id="sendBroadcastBtn" onclick="sendBroadcast()">一斉送信する</button>
         <div id="mailMsg" class="msg"></div>
       </div>
     </div>
@@ -477,7 +477,7 @@
           <label>本文</label>
           <textarea id="contact_body" rows="6" placeholder="お問い合わせ内容をご記入ください"></textarea>
         </div>
-        <button class="btn btn-full" onclick="sendContact()">送信する</button>
+        <button class="btn btn-full" id="sendContactBtn" onclick="sendContact()">送信する</button>
         <div id="contactMsg" style="display:none; margin-top:12px;"></div>
       </div>
     </div>
@@ -532,7 +532,7 @@
           <label>新しいパスワード（確認）</label>
           <input type="password" id="newPasswordConfirm" placeholder="もう一度入力してください">
         </div>
-        <button class="btn btn-full" onclick="changePassword()">パスワードを変更する</button>
+        <button class="btn btn-full" id="changePasswordBtn" onclick="changePassword()">パスワードを変更する</button>
         <div id="pwMsg" style="display:none; margin-top:12px;"></div>
       </div>
     </div>
@@ -596,8 +596,13 @@
     const email = document.getElementById('resetEmail').value.trim();
     const msg = document.getElementById('resetMsg');
     if (!email) { msg.textContent = 'メールアドレスを入力してください。'; msg.style.display = 'block'; msg.style.color = '#e53935'; return; }
+    const btn = document.getElementById('resetPasswordBtn');
+    btn.disabled = true;
+    btn.textContent = '読み込み中...';
     const res = await fetch(`${GAS_URL}?action=resetPassword&email=${encodeURIComponent(email)}`);
     const data = await res.json();
+    btn.disabled = false;
+    btn.textContent = '新しいパスワードを送信';
     msg.style.display = 'block';
     if (data.success) {
       msg.textContent = '新しいパスワードをメールで送信しました。';
@@ -850,8 +855,13 @@
     const date = document.getElementById('resv_date').value;
     if (!date) return;
 
+    const btn = document.getElementById('loadReservationsBtn');
+    btn.disabled = true;
+    btn.textContent = '読み込み中...';
     const res    = await fetch(`${GAS_URL}?action=getReservationsByDate&shopId=${shopId}&date=${date}`);
     const result = await res.json();
+    btn.disabled = false;
+    btn.textContent = '表示';
 
     document.getElementById('sumAdult').textContent = result.totalAdult;
     document.getElementById('sumChild').textContent = result.totalChild;
@@ -934,9 +944,14 @@
 
     if (!confirm(`登録されている全利用者にメールを送信します。よろしいですか？`)) return;
 
+    const btn = document.getElementById('sendBroadcastBtn');
+    btn.disabled = true;
+    btn.textContent = '送信中...';
     const params = new URLSearchParams({ action: 'sendBroadcastEmail', shopId, subject, body });
     const res    = await fetch(`${GAS_URL}?${params}`);
     const result = await res.json();
+    btn.disabled = false;
+    btn.textContent = '一斉送信する';
 
     if (result.success) {
       showMsg('mailMsg', 'success', `${result.count}件送信しました。`);
@@ -1143,9 +1158,14 @@
     const subject = document.getElementById('contact_subject').value.trim();
     const body    = document.getElementById('contact_body').value.trim();
     if (!subject || !body) { showMsg('contactMsg', 'error', '件名と本文を入力してください。'); return; }
+    const btn = document.getElementById('sendContactBtn');
+    btn.disabled = true;
+    btn.textContent = '送信中...';
     const params = new URLSearchParams({ action: 'sendContact', shopId, shopName, subject, body });
     const res    = await fetch(`${GAS_URL}?${params}`);
     const result = await res.json();
+    btn.disabled = false;
+    btn.textContent = '送信する';
     if (result.success) {
       showMsg('contactMsg', 'success', '送信しました。内容を確認の上、ご返信いたします。');
       document.getElementById('contact_subject').value = '';
@@ -1225,9 +1245,14 @@
       showMsg('pwMsg', 'error', '新しいパスワードが一致しません。'); return;
     }
 
+    const btn = document.getElementById('changePasswordBtn');
+    btn.disabled = true;
+    btn.textContent = '読み込み中...';
     const params = new URLSearchParams({ action: 'changePassword', shopId, currentPassword: current, newPassword: newPw });
     const res    = await fetch(`${GAS_URL}?${params}`);
     const result = await res.json();
+    btn.disabled = false;
+    btn.textContent = 'パスワードを変更する';
 
     if (result.success) {
       showMsg('pwMsg', 'success', 'パスワードを変更しました。');
