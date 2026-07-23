@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WaCCA お申し込み | こども食堂の予約管理をLINEで簡単に</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', sans-serif;
+      color: #333;
+      line-height: 1.7;
+      background: #FFF4EF;
+      min-height: 100vh;
+    }
+    .wrap {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+    .logo {
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+      color: #E07048;
+      margin-bottom: 8px;
+    }
+    .lead {
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 32px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 32px 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .form-group { margin-bottom: 18px; }
+    label { display: block; font-size: 14px; font-weight: bold; color: #555; margin-bottom: 6px; }
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #E0E0E0;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    input:focus { outline: none; border-color: #E07048; }
+    .btn {
+      width: 100%;
+      padding: 14px;
+      background: #E07048;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    .btn:disabled { background: #ccc; cursor: not-allowed; }
+    .msg {
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-top: 16px;
+      display: none;
+    }
+    .msg.success { background: #E8F5E9; color: #2E7D32; display: block; }
+    .msg.error   { background: #FFEBEE; color: #C62828; display: block; }
+    .note {
+      font-size: 12px;
+      color: #999;
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="logo">🍚 WaCCA</div>
+  <p class="lead">こども食堂の予約管理をLINEで簡単に。<br>まずは食堂名とメールアドレスをご入力ください。</p>
+
+  <div class="card">
+    <div id="formArea">
+      <div class="form-group">
+        <label>こども食堂名</label>
+        <input type="text" id="shopName" placeholder="例：○○こども食堂">
+      </div>
+      <div class="form-group">
+        <label>メールアドレス</label>
+        <input type="email" id="email" placeholder="example@mail.com">
+      </div>
+      <button class="btn" id="submitBtn" onclick="requestSignup()">申し込み用URLを送る</button>
+      <div id="msg" class="msg"></div>
+    </div>
+  </div>
+
+  <p class="note">入力いただいたメールアドレスへ、お申し込みを完了するためのURLをお送りします。</p>
+</div>
+
+<script>
+  const GAS_URL = 'https://script.google.com/macros/s/AKfycbxtQ2LWE8vJqbHUZq8tmN13fkXNytvgfdioUzN4NqkpRQkv11sIiajQvv4KfDAp6J4iZA/exec';
+
+  function showMsg(type, text) {
+    const el = document.getElementById('msg');
+    el.className = 'msg ' + type;
+    el.textContent = text;
+  }
+
+  async function requestSignup() {
+    const shopName = document.getElementById('shopName').value.trim();
+    const email    = document.getElementById('email').value.trim();
+
+    if (!shopName || !email) {
+      showMsg('error', '食堂名とメールアドレスを入力してください。');
+      return;
+    }
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+
+    const params = new URLSearchParams({ action: 'requestSignup', shopName, email });
+    const res    = await fetch(`${GAS_URL}?${params}`);
+    const result = await res.json();
+
+    btn.disabled = false;
+
+    if (result.success) {
+      showMsg('success', 'ご入力いただいたメールアドレスへ、お申し込み用のURLをお送りしました。メールをご確認ください。');
+      document.getElementById('shopName').value = '';
+      document.getElementById('email').value = '';
+    } else {
+      showMsg('error', result.message || '送信に失敗しました。時間をおいて再度お試しください。');
+    }
+  }
+</script>
+
+</body>
+</html>
