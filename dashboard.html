@@ -391,7 +391,10 @@
     <!-- 利用者パネル -->
     <div id="panel-users" class="panel">
       <div class="card">
-        <div class="card-title">登録利用者一覧</div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="card-title" style="margin-bottom:0;">登録利用者一覧</div>
+          <button class="btn btn-outline" style="font-size:12px; padding:6px 14px;" onclick="printUsers()">🖨️ PDF出力</button>
+        </div>
         <div class="table-wrap">
           <table>
             <thead>
@@ -972,6 +975,38 @@
   <div class="summary-item"><div class="num">${total}</div><div class="label">合計人数</div></div>
 </div>
 <table><thead><tr><th>氏名</th><th>大人</th><th>こども</th><th>利用料</th></tr></thead>
+<tbody>${rows}</tbody></table>
+<br>
+<button onclick="window.print()">🖨️ 印刷 / PDF保存</button>
+</body></html>`);
+    win.document.close();
+    win.focus();
+  }
+
+  function todayStr() {
+    return new Date().toLocaleDateString('ja-JP');
+  }
+
+  function printUsers() {
+    const rows = document.getElementById('usersTbody').innerHTML;
+    const win = window.open('', '_blank');
+    win.document.write(`<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8">
+<title>登録利用者一覧</title>
+<style>
+  @page { size: A4; margin: 15mm; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; padding: 0; color: #333; }
+  h2 { font-size: 18px; margin-bottom: 4px; }
+  .sub { font-size: 13px; color: #666; margin-bottom: 20px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #E07048; color: #fff; padding: 8px 10px; text-align: left; }
+  td { padding: 7px 10px; border-bottom: 1px solid #eee; }
+  tr:nth-child(even) td { background: #FFF8F5; }
+  @media print { button { display: none; } }
+</style></head><body>
+<h2>👥 登録利用者一覧</h2>
+<div class="sub">${shopName}　出力日：${todayStr()}</div>
+<table><thead><tr><th>氏名</th><th>メールアドレスの登録</th><th>予約回数</th><th>直近の予約日</th><th>前回の利用</th></tr></thead>
 <tbody>${rows}</tbody></table>
 <br>
 <button onclick="window.print()">🖨️ 印刷 / PDF保存</button>
