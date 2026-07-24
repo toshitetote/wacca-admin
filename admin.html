@@ -383,6 +383,7 @@ function renderShops(data) {
           ${statusNote}
           <button class="btn btn-sm" style="background:#E07048; color:#fff;" onclick="sendLineSetupEmail('${s.shopId}','${s.shopName}',this)">${lineEmailLabel}</button>
           ${lineEmailNote}
+          <button class="btn btn-sm" style="background:#fff; color:#E07048; border:1.5px solid #E07048;" onclick="createRichMenuForShop('${s.shopId}','${s.shopName}',this)">リッチメニュー作成</button>
         </td>
       </tr>
     `;
@@ -399,6 +400,20 @@ async function sendLineSetupEmail(shopId, shopName, btn) {
     alert(result.message || '送信に失敗しました。');
   }
   btn.disabled = false;
+}
+
+async function createRichMenuForShop(shopId, shopName, btn) {
+  if (!confirm(`${shopName}（${shopId}）のリッチメニューを自動作成します。\nG列（トークン）・H列（LIFF ID）が登録済みであることを確認してください。よろしいですか？`)) return;
+  btn.disabled = true;
+  btn.textContent = '作成中...';
+  const result = await gas({ action: 'createRichMenu', shopId });
+  if (result.success) {
+    alert('リッチメニューを作成しました。');
+  } else {
+    alert(result.message || '作成に失敗しました。');
+  }
+  btn.disabled = false;
+  btn.textContent = 'リッチメニュー作成';
 }
 
 async function toggleStatus(shopId, status, btn) {
