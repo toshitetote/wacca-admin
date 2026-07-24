@@ -891,9 +891,12 @@
   //  利用者
   // ============================================================
 
+  let currentUsers = [];
+
   async function loadUsers() {
     const res   = await fetch(`${GAS_URL}?action=getUsers&shopId=${shopId}`);
     const users = await res.json();
+    currentUsers = users;
     const tbody = document.getElementById('usersTbody');
 
     if (users.length === 0) {
@@ -1011,7 +1014,15 @@
   }
 
   function printUsers() {
-    const rows = document.getElementById('usersTbody').innerHTML;
+    const rows = currentUsers.map(u => `
+      <tr>
+        <td>${u.name}</td>
+        <td>${u.email || '—'}</td>
+        <td>${u.reservationCount}回</td>
+        <td>${u.lastReservedDate || '—'}</td>
+        <td>${u.usedLastTime === null ? '—' : (u.usedLastTime ? '✅' : '—')}</td>
+      </tr>
+    `).join('');
     const win = window.open('', '_blank');
     win.document.write(`<!DOCTYPE html>
 <html lang="ja"><head><meta charset="UTF-8">
@@ -1029,7 +1040,7 @@
 </style></head><body>
 <h2>👥 登録利用者一覧</h2>
 <div class="sub">${shopName}　出力日：${todayStr()}</div>
-<table><thead><tr><th>氏名</th><th>メールアドレスの登録</th><th>予約回数</th><th>直近の予約日</th><th>前回の利用</th></tr></thead>
+<table><thead><tr><th>氏名</th><th>メールアドレス</th><th>予約回数</th><th>直近の予約日</th><th>前回の利用</th></tr></thead>
 <tbody>${rows}</tbody></table>
 <br>
 <button onclick="window.print()">🖨️ 印刷 / PDF保存</button>
