@@ -331,19 +331,32 @@
 <hr>
 
 <!-- ============================================================ -->
-<h2>4. リッチメニューの設定</h2>
+<h2>4. リッチメニューの設定（自動作成）</h2>
 
-<p>LINE Official Account Managerの「リッチメニュー」から設定します。</p>
+<div class="notice">
+  💡 リッチメニューは<strong>admin.html（管理者ページ）の「リッチメニュー作成」ボタン</strong>から自動作成できる。手動での画像アップロード・エリア設定は不要。
+</div>
 
-<h3>推奨ボタン構成</h3>
-<ul>
-  <li>予約する　→　LIFF URL（liff.me/…）</li>
-  <li>予約確認・キャンセル　→　LIFF URL</li>
-  <li>次の開催日　→　テキスト送信「次の開催日」</li>
-</ul>
+<div class="step"><span class="step-num">STEP 1</span><p>食堂マスタのG列（LINEトークン）・H列（LIFF ID）が登録済みであることを確認する</p></div>
+<div class="step"><span class="step-num">STEP 2</span><p>admin.html（<a href="https://wacca-system.jp/admin.html">https://wacca-system.jp/admin.html</a>）にログイン →「食堂一覧」タブを開く</p></div>
+<div class="step"><span class="step-num">STEP 3</span><p>該当食堂の行にある「リッチメニュー作成」ボタンを押す</p></div>
+<div class="step"><span class="step-num">STEP 4</span><p>確認ダイアログでOKを押すと、画像アップロード・6つのボタン設定・デフォルト適用まで自動で完了する</p></div>
+
+<h3>自動生成されるボタン構成</h3>
+<table>
+  <thead><tr><th>ボタン</th><th>種類</th><th>内容</th></tr></thead>
+  <tbody>
+    <tr><td>A（左上）</td><td>リンク</td><td>予約する（LIFF URL）</td></tr>
+    <tr><td>B（中上）</td><td>テキスト</td><td>予約確認</td></tr>
+    <tr><td>C（右上）</td><td>テキスト</td><td>次の開催日</td></tr>
+    <tr><td>D（左下）</td><td>テキスト</td><td>キャンセル</td></tr>
+    <tr><td>E（中下）</td><td>リンク</td><td>登録情報の変更（LIFF URL、mode=update）</td></tr>
+    <tr><td>F（右下）</td><td>テキスト</td><td>問い合わせ</td></tr>
+  </tbody>
+</table>
 
 <div class="warn">
-  ⚠️ リッチメニューのLIFF URLは各食堂のLIFF IDに紐づきます。コピーする場合はLIFF IDが正しいか確認してください。
+  ⚠️ 「リッチメニュー作成」ボタンは既存のリッチメニューを上書きする。デザインを個別にカスタマイズしたい食堂がある場合は、自動作成後にLINE Official Account Manager側で手動調整すること。
 </div>
 
 <hr>
@@ -357,7 +370,7 @@
   <li><span class="box"></span>WebhookのURLを設定（クエリパラメータなし）※「検証」の302エラーは無視してOK</li>
   <li><span class="box"></span>チャンネルアクセストークンを発行し食堂マスタG列に記入</li>
   <li><span class="box"></span>LIFFアプリを作成し食堂マスタH列に記入</li>
-  <li><span class="box"></span>リッチメニューを設定</li>
+  <li><span class="box"></span>admin.htmlの「リッチメニュー作成」ボタンで自動作成</li>
   <li><span class="box"></span>テスト予約を1件入れて動作確認</li>
   <li><span class="box"></span>先方に完了報告メールを送付</li>
   <li><span class="box"></span>ダッシュボードにログインできることを確認（食堂側に確認）</li>
