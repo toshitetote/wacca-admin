@@ -652,14 +652,16 @@
   //  タブ切り替え
   // ============================================================
 
+  const tabLoaded = { receipt: false, settings: false, qr: false };
+
   function switchTab(name) {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     event.target.classList.add('active');
     document.getElementById('panel-' + name).classList.add('active');
-    if (name === 'receipt') loadReceipts();
-    if (name === 'settings') loadShopInfo();
-    if (name === 'qr') loadFlyerInfo();
+    if (name === 'receipt' && !tabLoaded.receipt) { loadReceipts(); tabLoaded.receipt = true; }
+    if (name === 'settings' && !tabLoaded.settings) { loadShopInfo(); tabLoaded.settings = true; }
+    if (name === 'qr' && !tabLoaded.qr) { loadFlyerInfo(); tabLoaded.qr = true; }
   }
 
   function copyLineUrl() {
