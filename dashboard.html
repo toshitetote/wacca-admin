@@ -353,6 +353,7 @@
             <select id="resv_date">
               <option value="">選択してください</option>
             </select>
+            <a href="#" id="showMoreDatesLink" onclick="showAllScheduleDates(); return false;" style="display:none; font-size:12px; color:#E07048; margin-top:6px;">もっと見る</a>
           </div>
           <div style="margin-bottom:14px;">
             <button class="btn" id="loadReservationsBtn" onclick="loadReservations()">表示</button>
@@ -715,28 +716,30 @@
       </tr>
     `).join('');
 
-    // プルダウンは直近90日以降（未来含む）に絞り、新しい順に並べる
-    const cutoff = new Date();
-    cutoff.setDate(cutoff.getDate() - 90);
-    const cutoffStr = cutoff.toISOString().slice(0, 10).replace(/-/g, '/');
+    // プルダウンは新しい順（未来〜過去）に並べ、初期表示は直近6件のみ
+    sortedScheduleDates = [...schedules].sort((a, b) => b.date.localeCompare(a.date));
+    populateDateSelect(sortedScheduleDates.slice(0, 6));
 
-    const recentSchedules = schedules
-      .filter(s => s.date >= cutoffStr)
-      .sort((a, b) => b.date.localeCompare(a.date));
+    const moreLink = document.getElementById('showMoreDatesLink');
+    moreLink.style.display = sortedScheduleDates.length > 6 ? 'inline-block' : 'none';
+  }
 
-    recentSchedules.forEach(s => {
+  let sortedScheduleDates = [];
+
+  function populateDateSelect(list) {
+    const select = document.getElementById('resv_date');
+    select.innerHTML = '<option value="">選択してください</option>';
+    list.forEach(s => {
       const opt = document.createElement('option');
       opt.value = s.date;
       opt.textContent = `${s.date}　${s.time}　${s.location}`;
       select.appendChild(opt);
     });
+  }
 
-    if (recentSchedules.length < schedules.length) {
-      const olderOpt = document.createElement('option');
-      olderOpt.disabled = true;
-      olderOpt.textContent = `※90日より前の開催日は一覧に表示されません`;
-      select.appendChild(olderOpt);
-    }
+  function showAllScheduleDates() {
+    populateDateSelect(sortedScheduleDates);
+    document.getElementById('showMoreDatesLink').style.display = 'none';
   }
 
   function initDateSelects() {
