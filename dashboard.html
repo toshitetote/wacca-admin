@@ -715,12 +715,28 @@
       </tr>
     `).join('');
 
-    schedules.forEach(s => {
+    // プルダウンは直近90日以降（未来含む）に絞り、新しい順に並べる
+    const cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - 90);
+    const cutoffStr = cutoff.toISOString().slice(0, 10).replace(/-/g, '/');
+
+    const recentSchedules = schedules
+      .filter(s => s.date >= cutoffStr)
+      .sort((a, b) => b.date.localeCompare(a.date));
+
+    recentSchedules.forEach(s => {
       const opt = document.createElement('option');
       opt.value = s.date;
       opt.textContent = `${s.date}　${s.time}　${s.location}`;
       select.appendChild(opt);
     });
+
+    if (recentSchedules.length < schedules.length) {
+      const olderOpt = document.createElement('option');
+      olderOpt.disabled = true;
+      olderOpt.textContent = `※90日より前の開催日は一覧に表示されません`;
+      select.appendChild(olderOpt);
+    }
   }
 
   function initDateSelects() {
