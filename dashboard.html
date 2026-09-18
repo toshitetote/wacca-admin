@@ -621,15 +621,21 @@
     }
   }
 
-  function startApp(preloaded) {
+  async function startApp(preloaded) {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('appScreen').style.display   = 'block';
     document.getElementById('headerShopName').textContent = shopName;
     window.scrollTo(0, 0);
     initDateSelects();
-    loadSchedules(preloaded && preloaded.schedules);
-    loadUsers(preloaded && preloaded.users);
-    loadShopInfo(preloaded && preloaded.shopInfo);
+
+    if (!preloaded) {
+      const res  = await fetch(`${GAS_URL}?action=loadDashboardData&shopId=${shopId}`);
+      preloaded  = await res.json();
+    }
+
+    loadSchedules(preloaded.schedules);
+    loadUsers(preloaded.users);
+    loadShopInfo(preloaded.shopInfo);
     tabLoaded.settings = true;
   }
 
