@@ -567,7 +567,7 @@
     btn.disabled = true;
     btn.textContent = '読み込み中...';
 
-    const res    = await fetch(`${GAS_URL}?action=login&shopId=${encodeURIComponent(id)}&password=${encodeURIComponent(pwd)}`);
+    const res    = await fetch(`${GAS_URL}?action=loginAndLoadDashboard&shopId=${encodeURIComponent(id)}&password=${encodeURIComponent(pwd)}`);
     const result = await res.json();
 
     if (result.success) {
@@ -575,7 +575,7 @@
       shopName = result.shopName;
       sessionStorage.setItem('shopId',   shopId);
       sessionStorage.setItem('shopName', shopName);
-      startApp();
+      startApp({ schedules: result.schedules, users: result.users, shopInfo: result.shopInfo });
     } else {
       showMsg('loginMsg', 'error', result.message);
       btn.disabled = false;
@@ -621,15 +621,15 @@
     }
   }
 
-  function startApp() {
+  function startApp(preloaded) {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('appScreen').style.display   = 'block';
     document.getElementById('headerShopName').textContent = shopName;
     window.scrollTo(0, 0);
     initDateSelects();
-    loadSchedules();
-    loadUsers();
-    loadShopInfo();
+    loadSchedules(preloaded && preloaded.schedules);
+    loadUsers(preloaded && preloaded.users);
+    loadShopInfo(preloaded && preloaded.shopInfo);
     tabLoaded.settings = true;
   }
 
@@ -690,9 +690,13 @@
   //  開催日程
   // ============================================================
 
-  async function loadSchedules() {
-    const res  = await fetch(`${GAS_URL}?action=getSchedules&shopId=${shopId}`);
-    schedules  = await res.json();
+  async function loadSchedules(preloaded) {
+    if (preloaded) {
+      schedules = preloaded;
+    } else {
+      const res = await fetch(`${GAS_URL}?action=getSchedules&shopId=${shopId}`);
+      schedules = await res.json();
+    }
 
     const tbody  = document.getElementById('scheduleTbody');
     const select = document.getElementById('resv_date');
@@ -922,9 +926,14 @@
 
   let currentUsers = [];
 
-  async function loadUsers() {
-    const res   = await fetch(`${GAS_URL}?action=getUsers&shopId=${shopId}`);
-    const users = await res.json();
+  async function loadUsers(preloaded) {
+    let users;
+    if (preloaded) {
+      users = preloaded;
+    } else {
+      const res = await fetch(`${GAS_URL}?action=getUsers&shopId=${shopId}`);
+      users = await res.json();
+    }
     currentUsers = users;
     const tbody = document.getElementById('usersTbody');
 
@@ -1215,9 +1224,14 @@
     }
   }
 
-  async function loadShopInfo() {
-    const res    = await fetch(`${GAS_URL}?action=getShopInfo&shopId=${shopId}`);
-    const result = await res.json();
+  async function loadShopInfo(preloaded) {
+    let result;
+    if (preloaded) {
+      result = preloaded;
+    } else {
+      const res = await fetch(`${GAS_URL}?action=getShopInfo&shopId=${shopId}`);
+      result = await res.json();
+    }
     if (!result.success) return;
     document.getElementById('info_shopName').value   = result.shopName   || '';
     document.getElementById('info_ownerName').value  = result.ownerName  || '';
